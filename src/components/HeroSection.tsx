@@ -22,7 +22,7 @@ export default function HeroSection() {
       
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
+        <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient fade-in-up">
             No Big Upfront Cost. Just a Truck You Can Drive Today.
           </h1>
@@ -31,7 +31,7 @@ export default function HeroSection() {
             Weekly, monthly, and quarterly truck rental plans across USA, Canada & UK.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 fade-in-up animation-delay-400">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center fade-in-up animation-delay-400">
             <Button 
               onClick={scrollToTrucks}
               className="btn-cta text-lg px-8 py-6"
