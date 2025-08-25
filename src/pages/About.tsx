@@ -1,3 +1,4 @@
+import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Truck, Globe, CreditCard, Wrench } from "lucide-react";
 import heroTruckImage from "@/assets/hero-truck.jpg";
@@ -41,8 +42,9 @@ export default function About() {
 
   return (
     <div className="min-h-screen">
+      <Navigation />
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-16">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroTruckImage})` }}
