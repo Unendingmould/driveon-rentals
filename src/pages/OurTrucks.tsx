@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Truck, Shield, CreditCard } from "lucide-react";
+import { Link } from "react-router-dom";
 import truck1 from "@/assets/truck-1.jpg";
 import truck2 from "@/assets/truck-2.jpg";
 import truck3 from "@/assets/truck-3.jpg";
@@ -207,11 +208,15 @@ export default function OurTrucks() {
 
                   {/* CTA Buttons */}
                   <div className="flex flex-col gap-3">
-                    <Button className="btn-cta w-full">
-                      Reserve This Truck
+                    <Button asChild className="btn-cta w-full">
+                      <Link to={`/order?truck=${truck.id}`}>
+                        Reserve This Truck
+                      </Link>
                     </Button>
-                    <Button variant="outline" className="btn-secondary w-full">
-                      Inquire Now
+                    <Button asChild variant="outline" className="btn-secondary w-full">
+                      <Link to={`/order?truck=${truck.id}`}>
+                        Inquire Now
+                      </Link>
                     </Button>
                   </div>
                 </div>

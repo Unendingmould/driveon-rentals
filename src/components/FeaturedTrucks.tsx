@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Truck {
   id: string;
@@ -159,10 +160,12 @@ export default function FeaturedTrucks() {
                 </div>
                 
                 <Button 
-                  onClick={() => handleGetTruck(truck.id)}
+                  asChild
                   className="btn-cta w-full"
                 >
-                  Get This Truck
+                  <Link to={`/order?truck=${truck.id}`}>
+                    Get This Truck
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
