@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -28,6 +29,7 @@ const formSchema = z.object({
 export default function OrderForm() {
   const [searchParams] = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const { toast } = useToast();
   
   const truckId = searchParams.get("truck") || "1";
@@ -80,10 +82,7 @@ export default function OrderForm() {
   const currentPlan = paymentPlans.find(plan => plan.id === selectedPaymentPlan);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    toast({
-      title: "Order Submitted!",
-      description: "We'll contact you within 24 hours to finalize your order.",
-    });
+    setShowConfirmation(true);
     console.log(values);
   }
 
@@ -338,6 +337,31 @@ export default function OrderForm() {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Dialog */}
+      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-primary" />
+              </div>
+            </div>
+            <DialogTitle className="text-2xl">Order Submitted Successfully!</DialogTitle>
+            <DialogDescription className="text-base">
+              Thank you for choosing us! We've received your order for the {selectedTruck.make} {selectedTruck.model} and will contact you within 24 hours to finalize the details.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 mt-6">
+            <Button onClick={() => setShowConfirmation(false)} className="btn-cta">
+              Got It
+            </Button>
+            <Button variant="outline" onClick={() => setShowConfirmation(false)} asChild>
+              <Link to="/trucks">View More Trucks</Link>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
