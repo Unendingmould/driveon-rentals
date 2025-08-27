@@ -11,7 +11,8 @@ export default function Navigation() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
-    { href: "/trucks", label: "Our Trucks" }
+    { href: "/trucks", label: "Our Trucks" },
+    { href: "/contact", label: "Contact Us" },
   ];
 
   const isActive = (href: string) => {
