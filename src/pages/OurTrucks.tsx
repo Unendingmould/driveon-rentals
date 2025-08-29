@@ -2,17 +2,36 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Truck, Shield, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
-import truck1 from "@/assets/truck-1.jpg";
-import truck2 from "@/assets/truck-2.jpg";
-import truck3 from "@/assets/truck-3.jpg";
+
+// Truck 1 images (White)
+import truck11 from "@/assets/truck-1-1.jpg";
+import truck12 from "@/assets/truck-1-2.jpg";
+import truck13 from "@/assets/truck-1-3.jpg";
+import truck14 from "@/assets/truck-1-4.jpg";
+import truck15 from "@/assets/truck-1-5.jpg";
+
+// Truck 2 images (Red)
+import truck21 from "@/assets/truck-2-1.jpg";
+import truck22 from "@/assets/truck-2-2.jpg";
+import truck23 from "@/assets/truck-2-3.jpg";
+import truck24 from "@/assets/truck-2-4.jpg";
+import truck25 from "@/assets/truck-2-5.jpg";
+
+// Truck 3 images (Blue)
+import truck31 from "@/assets/truck-3-1.jpg";
+import truck32 from "@/assets/truck-3-2.jpg";
+import truck33 from "@/assets/truck-3-3.jpg";
+import truck34 from "@/assets/truck-3-4.jpg";
+import truck35 from "@/assets/truck-3-5.jpg";
 
 export default function OurTrucks() {
   const trucks = [
     {
       id: 1,
-      image: truck1,
+      images: [truck11, truck12, truck13, truck14, truck15],
       make: "Freightliner",
       model: "Cascadia 125",
       year: "2024",
@@ -32,7 +51,7 @@ export default function OurTrucks() {
     },
     {
       id: 2,
-      image: truck2,
+      images: [truck21, truck22, truck23, truck24, truck25],
       make: "Freightliner",
       model: "Cascadia 125",
       year: "2024",
@@ -52,7 +71,7 @@ export default function OurTrucks() {
     },
     {
       id: 3,
-      image: truck3,
+      images: [truck31, truck32, truck33, truck34, truck35],
       make: "Freightliner",
       model: "Cascadia 125", 
       year: "2024",
@@ -118,13 +137,23 @@ export default function OurTrucks() {
                 className="card-gradient rounded-xl overflow-hidden hover-lift fade-in-up"
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
-                {/* Truck Image */}
+                {/* Truck Image Carousel */}
                 <div className="relative h-64 overflow-hidden">
-                  <img 
-                    src={truck.image} 
-                    alt={`${truck.make} ${truck.model}`}
-                    className="w-full h-full object-cover"
-                  />
+                  <Carousel className="w-full h-full">
+                    <CarouselContent>
+                      {truck.images.map((image, imageIndex) => (
+                        <CarouselItem key={imageIndex}>
+                          <img 
+                            src={image} 
+                            alt={`${truck.make} ${truck.model} - View ${imageIndex + 1}`}
+                            className="w-full h-64 object-cover"
+                          />
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="left-2" />
+                    <CarouselNext className="right-2" />
+                  </Carousel>
                   <div className="absolute top-4 left-4 flex gap-2">
                     <Badge className="bg-primary text-primary-foreground flex items-center gap-1">
                       <Shield className="w-3 h-3" />
