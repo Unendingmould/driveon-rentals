@@ -12,6 +12,7 @@ export default function Navigation() {
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
     { href: "/trucks", label: "Our Trucks" },
+    { href: "/financing", label: "Financing" },
     { href: "/contact", label: "Contact Us" },
   ];
 
