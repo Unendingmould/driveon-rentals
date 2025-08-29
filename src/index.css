@@ -149,7 +149,7 @@ All colors MUST be HSL.
 
   /* Animations */
   .fade-in-up {
-    @apply animate-[fadeInUp_0.6s_ease-out_forwards] opacity-0 translate-y-8;
+    @apply animate-[fadeInUp_0.6s_ease-out_forwards] opacity-100 translate-y-0;
   }
 
   .hover-lift {
