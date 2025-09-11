@@ -4,23 +4,19 @@ export default function Services() {
   const services = [
     {
       number: "01",
-      title: "Commercial deliveries",
-      highlighted: true
+      title: "Commercial deliveries"
     },
     {
       number: "02", 
-      title: "Moving services",
-      highlighted: false
+      title: "Moving services"
     },
     {
       number: "03",
-      title: "Construction work", 
-      highlighted: false
+      title: "Construction work"
     },
     {
       number: "04",
-      title: "Event logistics",
-      highlighted: false
+      title: "Event logistics"
     }
   ];
 
@@ -36,28 +32,18 @@ export default function Services() {
             {services.map((service, index) => (
               <div 
                 key={index}
-                className={`flex items-center justify-between p-6 rounded-lg border transition-all duration-300 hover:shadow-md cursor-pointer group ${
-                  service.highlighted 
-                    ? 'bg-yellow-400 border-yellow-400' 
-                    : 'bg-background border-border hover:border-primary/20'
-                }`}
+                className="flex items-center justify-between p-6 rounded-lg border bg-white border-gray-200 hover:bg-yellow-400 hover:border-yellow-400 transition-all duration-300 hover:shadow-md cursor-pointer group"
               >
                 <div className="flex items-center gap-8">
-                  <span className={`text-4xl font-light ${
-                    service.highlighted ? 'text-black' : 'text-muted-foreground'
-                  }`}>
+                  <span className="text-4xl font-light text-muted-foreground group-hover:text-black transition-colors duration-300">
                     {service.number}
                   </span>
-                  <h3 className={`text-3xl font-normal ${
-                    service.highlighted ? 'text-black' : 'text-foreground'
-                  }`}>
+                  <h3 className="text-3xl font-normal text-foreground group-hover:text-black transition-colors duration-300">
                     {service.title}
                   </h3>
                 </div>
                 
-                <ArrowRight className={`w-8 h-8 transition-transform duration-300 group-hover:translate-x-2 ${
-                  service.highlighted ? 'text-black' : 'text-muted-foreground'
-                }`} />
+                <ArrowRight className="w-8 h-8 transition-all duration-300 group-hover:translate-x-2 text-muted-foreground group-hover:text-black" />
               </div>
             ))}
           </div>
