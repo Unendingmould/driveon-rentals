@@ -21,15 +21,15 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-              <Truck className="w-5 h-5 text-primary-foreground" />
+            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+              <Truck className="w-5 h-5 text-primary" />
             </div>
-            <span className="text-xl font-bold text-foreground">TruckRentals</span>
+            <span className="text-xl font-bold text-white">TruckRentals</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -38,17 +38,17 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 to={link.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
+                className={`text-sm font-medium transition-colors hover:text-white ${
                   isActive(link.href) 
-                    ? "text-primary" 
-                    : "text-muted-foreground"
+                    ? "text-white" 
+                    : "text-white/80"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
-            <Button className="btn-cta">
-              Get Started
+            <Button className="bg-black text-white hover:bg-black/90 px-6 py-2 rounded-full font-medium">
+              Contact
             </Button>
           </div>
 

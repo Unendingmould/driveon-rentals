@@ -34,13 +34,12 @@ export default function HeroSection() {
           </p>
           
           <div className="flex items-center gap-4">
-            <Button 
-              onClick={scrollToTrucks}
-              className="bg-white text-foreground hover:bg-white/90 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105"
-            >
-              Our solutions
-              <span className="ml-2 text-xl">→</span>
-            </Button>
+            <div className="bg-white rounded-full flex items-center pr-2 pl-6 py-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group" onClick={scrollToTrucks}>
+              <span className="text-foreground font-medium text-lg mr-4">Our solutions</span>
+              <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center group-hover:bg-yellow-500 transition-colors duration-300">
+                <span className="text-xl font-bold text-black">→</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
