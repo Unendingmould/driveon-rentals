@@ -32,18 +32,18 @@ export default function Services() {
             {services.map((service, index) => (
               <div 
                 key={index}
-                className="flex items-center justify-between p-6 rounded-lg border bg-white border-gray-200 hover:bg-yellow-400 hover:border-yellow-400 transition-all duration-300 hover:shadow-md cursor-pointer group"
+                className="flex items-center justify-between p-6 rounded-lg border bg-card hover:bg-primary hover:border-primary transition-all duration-300 hover:shadow-md cursor-pointer group"
               >
                 <div className="flex items-center gap-8">
-                  <span className="text-4xl font-light text-muted-foreground group-hover:text-black transition-colors duration-300">
+                  <span className="text-4xl font-light text-muted-foreground group-hover:text-primary-foreground transition-colors duration-300">
                     {service.number}
                   </span>
-                  <h3 className="text-3xl font-normal text-foreground group-hover:text-black transition-colors duration-300">
+                  <h3 className="text-3xl font-normal text-foreground group-hover:text-primary-foreground transition-colors duration-300">
                     {service.title}
                   </h3>
                 </div>
                 
-                <ArrowRight className="w-8 h-8 transition-all duration-300 group-hover:translate-x-2 text-muted-foreground group-hover:text-black" />
+                <ArrowRight className="w-8 h-8 transition-all duration-300 group-hover:translate-x-2 text-muted-foreground group-hover:text-primary-foreground" />
               </div>
             ))}
           </div>

@@ -1,13 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { MessageCircle, CreditCard, Smartphone, Bitcoin, Gift } from "lucide-react";
+import { MessageCircle, Smartphone, Bitcoin } from "lucide-react";
 
 export default function PaymentOptions() {
   const paymentMethods = [
-    { name: "Cash App", icon: <Smartphone className="w-8 h-8" /> },
-    { name: "PayPal", icon: <CreditCard className="w-8 h-8" /> },
-    { name: "Zelle", icon: <Smartphone className="w-8 h-8" /> },
-    { name: "Bitcoin", icon: <Bitcoin className="w-8 h-8" /> },
-    { name: "Gift Cards", icon: <Gift className="w-8 h-8" /> }
+    { name: "Cash App", icon: <Smartphone className="w-16 h-16" fill="currentColor" /> },
+    { name: "Bitcoin", icon: <Bitcoin className="w-16 h-16" fill="currentColor" /> }
   ];
 
   const openWhatsApp = () => {
@@ -18,12 +15,12 @@ export default function PaymentOptions() {
     <section className="py-20 bg-secondary/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
             Flexible Payment Methods
           </h2>
           
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
-            Choose the option that works best for you – we accept Cash App, PayPal, Zelle, Bitcoin, and Gift Cards.
+            Choose the option that works best for you – we accept Cash App and Bitcoin.
           </p>
           
           {/* Payment Method Icons */}

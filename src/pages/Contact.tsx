@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, MapPin, MessageCircle, Send } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -71,49 +72,18 @@ export default function Contact() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="hero-overlay pt-24 pb-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              Get in Touch With Us
+      <section className="bg-white pt-32 pb-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-6xl md:text-8xl font-bold text-foreground">
+              Get in touch
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
-              Whether you have questions about trucks, payment plans, or partnerships — we're here to help.
-            </p>
           </div>
         </div>
       </section>
 
       <div className="container mx-auto px-4 py-16">
-        {/* Contact Info Section */}
-        <section className="mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Reach Us Directly
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {contactInfo.map((item, index) => (
-              <Card key={index} className="card-gradient hover:hover-lift transition-all duration-300">
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <item.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-2">{item.label}</h3>
-                  <a 
-                    href={item.href}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {item.value}
-                  </a>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Contact Form */}
           <section>
             <Card className="card-gradient">
@@ -223,7 +193,35 @@ export default function Contact() {
             </Card>
           </section>
         </div>
+        {/* Contact Info Section */}
+        <section className="mt-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Reach Us Directly
+            </h2>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {contactInfo.map((item, index) => (
+              <Card key={index} className="card-gradient hover:hover-lift transition-all duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <item.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-2">{item.label}</h3>
+                  <a 
+                    href={item.href}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {item.value}
+                  </a>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
       </div>
+      <Footer />
     </div>
   );
 }

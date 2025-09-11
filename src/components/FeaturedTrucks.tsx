@@ -1,177 +1,116 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
+import TruckDetailModal from './TruckDetailModal'; // Assuming the new component is in the same directory
 
-interface Truck {
+export interface Truck {
   id: string;
   model: string;
-  year: number;
-  image: string;
-  specs: {
-    mileage: string;
-    transmission: string;
-    fuel: string;
-    horsepower: string;
-  };
-  pricing: {
-    weekly: number;
-    monthly: number;
-    outright: number;
-  };
+  subtitle: string;
+  images: string[];
+  description: string;
+  features: { [key: string]: string };
+  applications: string[];
 }
 
+const trucks: Truck[] = [
+  {
+    id: '1',
+    model: 'Freightliner Cascadia',
+    subtitle: 'Heavy-Duty Hauler',
+    images: [
+      '/src/assets/truck-1-1.jpg',
+      '/src/assets/truck-1-2.jpg',
+      '/src/assets/truck-1-3.jpg',
+      '/src/assets/truck-1-4.jpg',
+    ],
+    description: 'The Freightliner Cascadia is the most advanced on-highway truck Freightliner has ever offered. Its robust design and fuel-efficient engineering make it a top choice for long-haul applications.',
+    features: {
+      'Engine': 'Detroit DD15 Gen 5',
+      'Horsepower': '455-505 HP',
+      'Transmission': 'Detroit DT12 On-Highway Series',
+      'Sleeper': '72" Raised Roof',
+    },
+    applications: ['Long Haul', 'Regional Distribution', 'Bulk Hauling'],
+  },
+  {
+    id: '2',
+    model: 'Peterbilt 579',
+    subtitle: 'Sleeper Cab',
+    images: [
+      '/src/assets/truck-2-1.jpg',
+      '/src/assets/truck-2-2.jpg',
+      '/src/assets/truck-2-3.jpg',
+      '/src/assets/truck-2-4.jpg',
+    ],
+    description: 'Known for its aerodynamic design and superior fuel efficiency, the Peterbilt 579 is a driver-favorite. It offers a comfortable, spacious interior and a smooth, quiet ride.',
+    features: {
+      'Engine': 'PACCAR MX-13',
+      'Horsepower': '405-510 HP',
+      'Transmission': 'PACCAR TX-12 Automated',
+      'Sleeper': '80" UltraLoft Sleeper',
+    },
+    applications: ['Temperature-Controlled', 'Tanker', 'General Freight'],
+  },
+  {
+    id: '3',
+    model: 'Kenworth T680',
+    subtitle: 'Aerodynamic Efficiency',
+    images: [
+      '/src/assets/truck-3-1.jpg',
+      '/src/assets/truck-3-2.jpg',
+      '/src/assets/truck-3-3.jpg',
+      '/src/assets/truck-3-4.jpg',
+    ],
+    description: 'The Kenworth T680 sets a high standard for aerodynamic performance and driver comfort. It\'s a reliable and efficient choice for a wide range of applications.',
+    features: {
+      'Engine': 'PACCAR MX-13',
+      'Horsepower': '405-510 HP',
+      'Transmission': 'PACCAR TX-18 Automated',
+      'Sleeper': '76" High-Roof Sleeper',
+    },
+    applications: ['Flatbed', 'Intermodal', 'Less-Than-Truckload'],
+  },
+];
+
 export default function FeaturedTrucks() {
-  const [selectedPlan, setSelectedPlan] = useState<string>("weekly");
-
-  const trucks: Truck[] = [
-    {
-      id: "1",
-      model: "Freightliner Cascadia 125",
-      year: 2024,
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&crop=center",
-      specs: {
-        mileage: "45,000 mi",
-        transmission: "Automatic",
-        fuel: "Diesel",
-        horsepower: "475 HP"
-      },
-      pricing: {
-        weekly: 800,
-        monthly: 2500,
-        outright: 65000
-      }
-    },
-    {
-      id: "2", 
-      model: "Peterbilt 579",
-      year: 2023,
-      image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&h=400&fit=crop&crop=center",
-      specs: {
-        mileage: "52,000 mi",
-        transmission: "Manual",
-        fuel: "Diesel",
-        horsepower: "500 HP"
-      },
-      pricing: {
-        weekly: 850,
-        monthly: 2700,
-        outright: 72000
-      }
-    },
-    {
-      id: "3",
-      model: "Kenworth T680",
-      year: 2024,
-      image: "https://images.unsplash.com/photo-1566473965997-3de9c817e938?w=600&h=400&fit=crop&crop=center",
-      specs: {
-        mileage: "38,000 mi", 
-        transmission: "Automatic",
-        fuel: "Diesel",
-        horsepower: "485 HP"
-      },
-      pricing: {
-        weekly: 825,
-        monthly: 2600,
-        outright: 68000
-      }
-    }
-  ];
-
-  const handleGetTruck = (truckId: string) => {
-    // Scroll to CTA section
-    document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const [selectedTruck, setSelectedTruck] = useState<Truck | null>(null);
 
   return (
-    <section id="trucks" className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-8 text-gradient">
-            Available Now
-          </h2>
-          
-          {/* Plan Selector */}
-          <div className="inline-flex p-2 card-gradient rounded-lg">
-            {["weekly", "monthly", "outright"].map((plan) => (
-              <button
-                key={plan}
-                onClick={() => setSelectedPlan(plan)}
-                className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
-                  selectedPlan === plan 
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                {plan.charAt(0).toUpperCase() + plan.slice(1)}
-              </button>
+    <>
+      <section id="trucks" className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-foreground">
+              Our Featured Trucks
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            {trucks.map((truck) => (
+              <div key={truck.id} className="group cursor-pointer" onClick={() => setSelectedTruck(truck)}>
+                <div className="relative bg-muted/50 rounded-lg p-8 mb-4 aspect-square flex items-center justify-center overflow-hidden">
+                  <img
+                    src={truck.images[0]} // Show the first image
+                    alt={truck.model}
+                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ArrowUpRight className="h-6 w-6 text-primary-foreground" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">{truck.model}</h3>
+                  <p className="text-muted-foreground">{truck.subtitle}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
+      </section>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {trucks.map((truck, index) => (
-            <Card 
-              key={truck.id} 
-              className="card-gradient border-border hover-lift overflow-hidden fade-in-up"
-              style={{ animationDelay: `${index * 0.2}s` }}
-            >
-              <div className="aspect-video overflow-hidden">
-                <img 
-                  src={truck.image} 
-                  alt={`${truck.model} ${truck.year}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              
-              <CardContent className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Badge variant="secondary" className="bg-primary/20 text-primary">
-                    {truck.year}
-                  </Badge>
-                </div>
-                
-                <h3 className="text-xl font-bold mb-4 text-foreground">
-                  {truck.model}
-                </h3>
-                
-                {/* Specs */}
-                <div className="grid grid-cols-2 gap-2 mb-6 text-sm text-muted-foreground">
-                  <div>{truck.specs.mileage}</div>
-                  <div>{truck.specs.transmission}</div>
-                  <div>{truck.specs.fuel}</div>
-                  <div>{truck.specs.horsepower}</div>
-                </div>
-                
-                {/* Pricing */}
-                <div className="mb-6">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    ${selectedPlan === "weekly" && `${truck.pricing.weekly}/week`}
-                    {selectedPlan === "monthly" && `${truck.pricing.monthly}/month`}
-                    {selectedPlan === "outright" && truck.pricing.outright.toLocaleString()}
-                  </div>
-                  
-                  {selectedPlan !== "outright" && (
-                    <div className="text-sm text-muted-foreground">
-                      Weekly: ${truck.pricing.weekly} • Monthly: ${truck.pricing.monthly}
-                    </div>
-                  )}
-                </div>
-                
-                <Button 
-                  asChild
-                  className="btn-cta w-full"
-                >
-                  <Link to={`/order?truck=${truck.id}`}>
-                    Get This Truck
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    </section>
+      {selectedTruck && (
+        <TruckDetailModal truck={selectedTruck} onClose={() => setSelectedTruck(null)} />
+      )}
+    </>
   );
 }

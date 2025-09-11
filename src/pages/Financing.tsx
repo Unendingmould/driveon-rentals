@@ -1,7 +1,9 @@
-import { Check, Clock, Shield, CreditCard, ArrowRight } from "lucide-react";
+import { Check, Clock, Shield, CreditCard, ArrowRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const Financing = () => {
   const plans = [
@@ -60,10 +62,22 @@ const Financing = () => {
   ];
 
   const steps = [
-    "Select your truck from our Trucks page.",
-    "Fill out the financing form with your details.",
-    "Choose your preferred payment plan.",
-    "Get approval and start driving your truck!"
+    {
+      question: "Select Your Truck",
+      answer: "Browse our inventory on the Trucks page and choose the vehicle that best fits your needs. Each listing provides detailed specifications to help you decide."
+    },
+    {
+      question: "Fill Out the Financing Form",
+      answer: "Once you've selected a truck, complete our straightforward financing application. We only ask for the essential details to process your request quickly."
+    },
+    {
+      question: "Choose Your Payment Plan",
+      answer: "We offer a variety of flexible payment plans. Select the one that aligns with your budget and business's cash flow—whether it's weekly, monthly, or quarterly."
+    },
+    {
+      question: "Get Approved and Drive",
+      answer: "Our team will review your application and provide a decision promptly. Upon approval, you can get behind the wheel and start your journey."
+    }
   ];
 
   return (
@@ -71,13 +85,13 @@ const Financing = () => {
       <Navigation />
       
       {/* Header Section */}
-      <section className="relative py-24 bg-gradient-to-r from-background via-background/95 to-background overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl font-bold text-foreground mb-6 fade-in-up">
-              Flexible Financing & Payment Plans
+      <section className="bg-white pt-32 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <h1 className="text-6xl md:text-8xl font-bold text-foreground leading-tight">
+              Flexible financing & payment plans.
             </h1>
-            <p className="text-xl text-muted-foreground fade-in-up animation-delay-200">
+            <p className="mt-6 text-xl md:text-2xl text-muted-foreground">
               Choose a payment plan that fits your budget and business needs.
             </p>
           </div>
@@ -99,7 +113,7 @@ const Financing = () => {
                 key={index}
                 className={`flex items-start space-x-4 p-6 card-gradient border border-border rounded-lg fade-in-up animation-delay-${index * 200}`}
               >
-                <div className="text-primary flex-shrink-0">
+                <div className="text-yellow-500 flex-shrink-0">
                   {benefit.icon}
                 </div>
                 <p className="text-foreground text-lg">{benefit.text}</p>
@@ -123,12 +137,12 @@ const Financing = () => {
               <Card
                 key={index}
                 className={`relative card-gradient border-border hover-lift fade-in-up animation-delay-${index * 200} ${
-                  plan.popular ? 'ring-2 ring-primary' : ''
+                  plan.popular ? 'ring-2 ring-yellow-400' : ''
                 }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
+                    <span className="bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-semibold">
                       Most Popular
                     </span>
                   </div>
@@ -143,13 +157,13 @@ const Financing = () => {
                   <div className="space-y-3">
                     {plan.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center space-x-2">
-                        <Check className="w-4 h-4 text-primary" />
+                        <Check className="w-4 h-4 text-yellow-500" />
                         <span className="text-foreground">{feature}</span>
                       </div>
                     ))}
                   </div>
                   
-                  <Button className="w-full btn-cta mt-6">
+                  <Button className="w-full btn-cta mt-6 rounded-full">
                     {plan.cta}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -162,35 +176,39 @@ const Financing = () => {
 
       {/* How It Works */}
       <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground">
               How Financing Works
             </h2>
+            <p className="text-xl text-muted-foreground">
+              A simple, transparent process to get you on the road.
+            </p>
           </div>
 
-          <div className="max-w-3xl mx-auto">
-            <div className="space-y-8">
-              {steps.map((step, index) => (
-                <div
-                  key={index}
-                  className={`flex items-start space-x-6 fade-in-up animation-delay-${index * 200}`}
-                >
-                  <div className="w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
-                    {index + 1}
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            {steps.map((step, index) => (
+              <AccordionItem key={index} value={`item-${index}`} className="border-b">
+                <AccordionTrigger noChevron className="flex justify-between items-center w-full py-6 text-left font-semibold text-foreground hover:no-underline group">
+                  <div className="flex items-center">
+                    <span className="text-lg text-muted-foreground mr-8">{`0${index + 1}`}</span>
+                    <span className="text-lg">{step.question}</span>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-lg text-foreground">{step}</p>
+                  <div className="h-10 w-10 bg-primary rounded-full flex items-center justify-center transform transition-transform duration-300 group-data-[state=open]:rotate-45">
+                    <Plus className="h-6 w-6 text-primary-foreground" />
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-6 pl-16">
+                  {step.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/10 to-primary/5">
+      <section className="py-20 bg-gradient-to-r from-yellow-400/10 to-yellow-400/5">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold text-foreground mb-4">
             Ready to Get Started?
@@ -198,12 +216,13 @@ const Financing = () => {
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Apply today and get approved for your truck financing.
           </p>
-          <Button className="btn-cta text-lg px-8 py-4">
+          <Button className="btn-cta text-lg px-8 py-4 rounded-full">
             Apply for Financing
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

@@ -12,7 +12,7 @@ export default function WhyChooseUs() {
     <section className="py-20 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-12 text-gradient">
+          <h2 className="text-3xl md:text-5xl font-bold mb-12 text-foreground">
             Made For Drivers Who Can't Buy a Truck Outright
           </h2>
           

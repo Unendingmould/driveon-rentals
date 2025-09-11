@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { Truck, Shield, CreditCard } from "lucide-react";
+import { useState } from 'react';
+import { Truck, Shield, CreditCard, Plus, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import Footer from "@/components/Footer";
+import TruckDetailModal from '@/components/TruckDetailModal';
 
 // Truck 1 images (White)
 import truck11 from "@/assets/truck-1-1.jpg";
@@ -27,8 +30,31 @@ import truck33 from "@/assets/truck-3-3.jpg";
 import truck34 from "@/assets/truck-3-4.jpg";
 import truck35 from "@/assets/truck-3-5.jpg";
 
+// Define a more specific interface for the trucks on this page
+export interface OurTruck {
+  id: number;
+  images: string[];
+  make: string;
+  model: string;
+  year: string;
+  mileage: string;
+  engine: string;
+  transmission: string;
+  vin: string;
+  title: string;
+  axles: string;
+  suspension: string;
+  exterior: string;
+  interior: string;
+  condition: string;
+  warranty: string;
+  weeklyRate: string;
+  monthlyRate: string;
+}
+
 export default function OurTrucks() {
-  const trucks = [
+  const [selectedTruck, setSelectedTruck] = useState<OurTruck | null>(null);
+  const trucks: OurTruck[] = [
     {
       id: 1,
       images: [truck11, truck12, truck13, truck14, truck15],
@@ -114,13 +140,13 @@ export default function OurTrucks() {
     <div className="min-h-screen bg-background">
       <Navigation />
       {/* Header Section */}
-      <section className="py-20 bg-secondary/30 pt-32">
+      <section className="bg-white pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient">
-              Find the Right Truck for You
+          <div className="max-w-4xl">
+            <h1 className="text-6xl md:text-8xl font-bold text-foreground leading-tight">
+              Find the right truck for you.
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="mt-6 text-xl md:text-2xl text-muted-foreground">
               Flexible payment, reliable trucks, ready for the road.
             </p>
           </div>
@@ -130,124 +156,22 @@ export default function OurTrucks() {
       {/* Trucks Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {trucks.map((truck, index) => (
-              <div 
-                key={truck.id}
-                className="card-gradient rounded-xl overflow-hidden hover-lift fade-in-up"
-                style={{ animationDelay: `${index * 0.15}s` }}
-              >
-                {/* Truck Image Carousel */}
-                <div className="relative h-64 overflow-hidden">
-                  <Carousel className="w-full h-full">
-                    <CarouselContent>
-                      {truck.images.map((image, imageIndex) => (
-                        <CarouselItem key={imageIndex}>
-                          <img 
-                            src={image} 
-                            alt={`${truck.make} ${truck.model} - View ${imageIndex + 1}`}
-                            className="w-full h-64 object-cover"
-                          />
-                        </CarouselItem>
-                      ))}
-                    </CarouselContent>
-                    <CarouselPrevious className="left-2" />
-                    <CarouselNext className="right-2" />
-                  </Carousel>
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <Badge className="bg-primary text-primary-foreground flex items-center gap-1">
-                      <Shield className="w-3 h-3" />
-                      Clean Title
-                    </Badge>
-                    <Badge className="bg-secondary text-secondary-foreground flex items-center gap-1">
-                      <CreditCard className="w-3 h-3" />
-                      Flexible Payment
-                    </Badge>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            {trucks.map((truck) => (
+              <div key={truck.id} className="group cursor-pointer" onClick={() => setSelectedTruck(truck)}>
+                <div className="relative bg-muted/50 rounded-lg p-8 mb-4 aspect-square flex items-center justify-center overflow-hidden">
+                  <img
+                    src={truck.images[0]}
+                    alt={truck.model}
+                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ArrowUpRight className="h-6 w-6 text-primary-foreground" />
                   </div>
                 </div>
-
-                {/* Truck Details */}
-                <div className="p-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Truck className="w-5 h-5 text-primary" />
-                    <h3 className="text-2xl font-bold text-foreground">
-                      {truck.make} {truck.model}
-                    </h3>
-                  </div>
-
-                  {/* Key Specs Grid */}
-                  <div className="grid grid-cols-2 gap-3 mb-6 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Year:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.year}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Mileage:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.mileage}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Engine:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.engine}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Transmission:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.transmission}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">VIN:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.vin}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Axles:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.axles}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Suspension:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.suspension}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Exterior:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.exterior}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Interior:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.interior}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Condition:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.condition}</span>
-                    </div>
-                    <div className="col-span-2">
-                      <span className="text-muted-foreground">Warranty:</span>
-                      <span className="ml-2 font-medium text-foreground">{truck.warranty}</span>
-                    </div>
-                  </div>
-
-                  {/* Pricing */}
-                  <div className="border-t border-border pt-4 mb-6">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-muted-foreground">Weekly:</span>
-                      <span className="text-xl font-bold text-primary">{truck.weeklyRate}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Monthly:</span>
-                      <span className="text-xl font-bold text-primary">{truck.monthlyRate}</span>
-                    </div>
-                  </div>
-
-                  {/* CTA Buttons */}
-                  <div className="flex flex-col gap-3">
-                    <Button asChild className="btn-cta w-full">
-                      <Link to={`/order?truck=${truck.id}`}>
-                        Reserve This Truck
-                      </Link>
-                    </Button>
-                    <Button asChild variant="outline" className="btn-secondary w-full">
-                      <Link to={`/order?truck=${truck.id}`}>
-                        Inquire Now
-                      </Link>
-                    </Button>
-                  </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">{truck.make} {truck.model}</h3>
+                  <p className="text-muted-foreground">{truck.year} • {truck.mileage} miles</p>
                 </div>
               </div>
             ))}
@@ -257,9 +181,9 @@ export default function OurTrucks() {
 
       {/* FAQ Section */}
       <section className="py-20 bg-secondary/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gradient">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground">
               Frequently Asked Questions
             </h2>
             <p className="text-xl text-muted-foreground">
@@ -267,17 +191,19 @@ export default function OurTrucks() {
             </p>
           </div>
 
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion type="single" collapsible className="w-full space-y-4">
             {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
-                value={`item-${index}`}
-                className="card-gradient rounded-xl px-6 border-0"
-              >
-                <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-6">
-                  {faq.question}
+              <AccordionItem key={index} value={`item-${index}`} className="border-b">
+                <AccordionTrigger noChevron className="flex justify-between items-center w-full py-6 text-left font-semibold text-foreground hover:no-underline group">
+                  <div className="flex items-center">
+                    <span className="text-lg text-muted-foreground mr-8">{`0${index + 1}`}</span>
+                    <span className="text-lg">{faq.question}</span>
+                  </div>
+                  <div className="h-10 w-10 bg-primary rounded-full flex items-center justify-center transform transition-transform duration-300 group-data-[state=open]:rotate-45">
+                    <Plus className="h-6 w-6 text-primary-foreground" />
+                  </div>
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-6">
+                <AccordionContent className="text-muted-foreground pb-6 pl-16">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -285,6 +211,34 @@ export default function OurTrucks() {
           </Accordion>
         </div>
       </section>
+      <Footer />
+
+      {selectedTruck && (
+        <TruckDetailModal 
+          truck={{
+            id: selectedTruck.id.toString(),
+            model: `${selectedTruck.make} ${selectedTruck.model}`,
+            subtitle: `${selectedTruck.year} • ${selectedTruck.mileage} miles`,
+            images: selectedTruck.images,
+            description: `A reliable ${selectedTruck.condition} ${selectedTruck.make} ${selectedTruck.model} with a ${selectedTruck.engine} engine and ${selectedTruck.transmission} transmission. This truck is ready for the road.`,
+            features: {
+              'Make': selectedTruck.make,
+              'Model': selectedTruck.model,
+              'Year': selectedTruck.year,
+              'Mileage': selectedTruck.mileage,
+              'Engine': selectedTruck.engine,
+              'Transmission': selectedTruck.transmission,
+              'VIN': selectedTruck.vin,
+              'Condition': selectedTruck.condition,
+              'Warranty': selectedTruck.warranty,
+              'Weekly Rate': selectedTruck.weeklyRate,
+              'Monthly Rate': selectedTruck.monthlyRate,
+            },
+            applications: [selectedTruck.axles, selectedTruck.suspension, 'Heavy-Duty'],
+          }}
+          onClose={() => setSelectedTruck(null)} 
+        />
+      )}
     </div>
   );
 }

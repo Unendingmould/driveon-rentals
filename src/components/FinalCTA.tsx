@@ -16,7 +16,7 @@ export default function FinalCTA() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-gradient fade-in-up">
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-foreground fade-in-up">
             Stop waiting, start driving.
           </h2>
           
@@ -26,7 +26,7 @@ export default function FinalCTA() {
           
           <Button 
             onClick={handleGetTruck}
-            className="btn-cta text-xl px-12 py-6 fade-in-up animation-delay-400"
+            className="btn-cta text-xl px-12 py-6 rounded-full fade-in-up animation-delay-400"
           >
             Get My Truck
           </Button>

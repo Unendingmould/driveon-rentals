@@ -7,6 +7,7 @@ import Testimonials from "@/components/Testimonials";
 import FeaturedTrucks from "@/components/FeaturedTrucks";
 import PaymentOptions from "@/components/PaymentOptions";
 import FinalCTA from "@/components/FinalCTA";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
       <FeaturedTrucks />
       <PaymentOptions />
       <FinalCTA />
+      <Footer />
     </div>
   );
 };

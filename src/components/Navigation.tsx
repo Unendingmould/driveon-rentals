@@ -3,11 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Truck } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import logo from "@/assets/truckonflex.svg";
+import logoWhite from "@/assets/truckonflex-white.svg";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isTransparent, setIsTransparent] = useState(true);
   const location = useLocation();
 
   const navLinks = [
@@ -15,7 +18,6 @@ export default function Navigation() {
     { href: "/about", label: "About Us" },
     { href: "/trucks", label: "Our Trucks" },
     { href: "/financing", label: "Financing" },
-    { href: "/contact", label: "Contact Us" },
   ];
 
   const isActive = (href: string) => {
@@ -23,36 +25,48 @@ export default function Navigation() {
   };
 
   useEffect(() => {
+    const transparentHeaderRoutes = ['/']; // Add other routes with hero images here
+    const isTransparentRoute = transparentHeaderRoutes.includes(location.pathname);
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
-      if (currentScrollY < lastScrollY || currentScrollY < 10) {
-        // Scrolling up or at top
-        setIsVisible(true);
+
+      if (isTransparentRoute) {
+        setIsTransparent(currentScrollY <= 50);
       } else {
-        // Scrolling down
-        setIsVisible(false);
+        setIsTransparent(false);
       }
-      
-      setLastScrollY(currentScrollY);
+
+      // Hide on scroll down, show on scroll up
+      setLastScrollY(prevScrollY => {
+        setIsVisible(currentScrollY < prevScrollY || currentScrollY < 10);
+        return currentScrollY;
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Set initial state
+    if (isTransparentRoute) {
+      setIsTransparent(window.scrollY <= 50);
+    } else {
+      setIsTransparent(false);
+    }
+
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, [location.pathname]);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-sm transition-transform duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
+    } ${
+      isTransparent ? 'bg-transparent backdrop-blur-sm' : 'bg-white shadow-md'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-24">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <Truck className="w-5 h-5 text-primary" />
-            </div>
-            <span className="text-xl font-bold text-white">TruckRentals</span>
+          <Link to="/" className="flex items-center space-x-2">
+            <img src={isTransparent ? logoWhite : logo} alt="DriveOn Logo" className="h-24 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -61,16 +75,16 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 to={link.href}
-                className={`text-sm font-medium transition-colors hover:text-white ${
-                  isActive(link.href) 
-                    ? "text-white" 
-                    : "text-white/80"
+                className={`text-sm font-medium transition-colors ${
+                  isTransparent
+                    ? `hover:text-white ${isActive(link.href) ? 'text-white' : 'text-white/80'}`
+                    : `hover:text-primary ${isActive(link.href) ? 'text-black' : 'text-black/80'}`
                 }`}
               >
                 {link.label}
               </Link>
             ))}
-            <Button className="bg-black text-white hover:bg-black/90 px-6 py-2 rounded-full font-medium">
+            <Button className={`px-6 py-2 rounded-full font-medium transition-colors ${isTransparent ? 'bg-black text-white hover:bg-black/90' : 'bg-primary text-white hover:bg-primary/90'}`}>
               Contact
             </Button>
           </div>
@@ -99,7 +113,7 @@ export default function Navigation() {
                       {link.label}
                     </Link>
                   ))}
-                  <Button className="btn-cta w-full mt-4">
+                  <Button className="btn-cta w-full mt-4 rounded-full">
                     Get Started
                   </Button>
                 </div>

@@ -19,13 +19,8 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="max-w-4xl">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
-            <span className="text-white">Get ready for a</span>
-            <br />
-            <span className="text-white">truck </span>
-            <span className="bg-primary text-primary-foreground px-4 py-2 rounded-lg inline-block">
-              rental
-            </span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight text-white">
+            Get ready for a<br />truck rental
           </h1>
           
           <p className="text-xl md:text-2xl mb-12 text-white/90 max-w-2xl">

@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ChevronDown, Shield, Lock, CheckCircle, ArrowLeft, Truck } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
@@ -101,7 +102,7 @@ export default function OrderForm() {
             <ArrowLeft className="w-4 h-4" />
             Back to Trucks
           </Link>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gradient">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
             Secure Your Truck Today
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground">
@@ -362,6 +363,7 @@ export default function OrderForm() {
           </div>
         </DialogContent>
       </Dialog>
+      <Footer />
     </div>
   );
 }
