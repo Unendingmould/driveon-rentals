@@ -6,54 +6,42 @@ export default function HeroSection() {
     document.getElementById('trucks')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const scrollToCTA = () => {
-    document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroTruckImage})` }}
       >
-        <div className="absolute inset-0 hero-overlay" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
       
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient fade-in-up">
-            No Big Upfront Cost. Just a Truck You Can Drive Today.
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-4xl">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+            <span className="text-white">Get ready for a</span>
+            <br />
+            <span className="text-white">truck </span>
+            <span className="bg-primary text-primary-foreground px-4 py-2 rounded-lg inline-block">
+              rental
+            </span>
           </h1>
           
-          <p className="text-xl md:text-2xl mb-8 text-muted-foreground fade-in-up animation-delay-200">
-            Weekly, monthly, and quarterly truck rental plans across USA, Canada & UK.
+          <p className="text-xl md:text-2xl mb-12 text-white/90 max-w-2xl">
+            Driving success through flexible 
+            truck rental solutions.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center fade-in-up animation-delay-400">
+          <div className="flex items-center gap-4">
             <Button 
               onClick={scrollToTrucks}
-              className="btn-cta text-lg px-8 py-6"
+              className="bg-white text-foreground hover:bg-white/90 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105"
             >
-              Find My Truck
-            </Button>
-            
-            <Button 
-              onClick={scrollToCTA}
-              variant="outline" 
-              className="btn-secondary text-lg px-8 py-6"
-            >
-              Start Driving Now
+              Our solutions
+              <span className="ml-2 text-xl">→</span>
             </Button>
           </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
     </section>
