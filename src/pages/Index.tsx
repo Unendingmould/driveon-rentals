@@ -1,17 +1,23 @@
-import MinimalNavigation from "@/components/MinimalNavigation";
-import MinimalHero from "@/components/MinimalHero";
-import TruckSolutions from "@/components/TruckSolutions";
-import HowWeHelp from "@/components/HowWeHelp";
-import TruckShowcase from "@/components/TruckShowcase";
+import Navigation from "@/components/Navigation";
+import HeroSection from "@/components/HeroSection";
+import HowItWorks from "@/components/HowItWorks";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import Testimonials from "@/components/Testimonials";
+import FeaturedTrucks from "@/components/FeaturedTrucks";
+import PaymentOptions from "@/components/PaymentOptions";
+import FinalCTA from "@/components/FinalCTA";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
-      <MinimalNavigation />
-      <MinimalHero />
-      <TruckSolutions />
-      <HowWeHelp />
-      <TruckShowcase />
+      <Navigation />
+      <HeroSection />
+      <HowItWorks />
+      <WhyChooseUs />
+      <Testimonials />
+      <FeaturedTrucks />
+      <PaymentOptions />
+      <FinalCTA />
     </div>
   );
 };
