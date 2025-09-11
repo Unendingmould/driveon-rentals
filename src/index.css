@@ -8,48 +8,48 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Truck Rental Theme - Professional & Trustworthy */
-    --background: 220 15% 8%;
-    --foreground: 0 0% 100%;
+    /* Truck Rental Theme - Clean & Modern */
+    --background: 0 0% 98%;
+    --foreground: 222 15% 15%;
 
-    --card: 220 10% 12%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 15% 15%;
 
-    --popover: 220 10% 12%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 15% 15%;
 
-    --primary: 45 95% 55%;
-    --primary-foreground: 220 15% 8%;
+    --primary: 200 95% 45%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 220 8% 18%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 210 25% 92%;
+    --secondary-foreground: 222 15% 15%;
 
-    --muted: 220 8% 15%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 210 20% 94%;
+    --muted-foreground: 222 15% 45%;
 
-    --accent: 220 8% 20%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 170 85% 50%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 220 8% 25%;
-    --input: 220 8% 18%;
-    --ring: 45 95% 55%;
+    --border: 210 25% 85%;
+    --input: 210 25% 92%;
+    --ring: 200 95% 45%;
 
     --radius: 0.75rem;
 
     /* Custom Design Tokens */
-    --hero-gradient: linear-gradient(135deg, hsl(220, 15%, 5%) 0%, hsl(220, 12%, 12%) 100%);
-    --cta-gradient: linear-gradient(135deg, hsl(45, 95%, 55%) 0%, hsl(42, 98%, 48%) 100%);
-    --cta-hover-gradient: linear-gradient(135deg, hsl(42, 98%, 48%) 0%, hsl(39, 100%, 45%) 100%);
-    --card-gradient: linear-gradient(145deg, hsl(220, 10%, 12%) 0%, hsl(220, 8%, 15%) 100%);
-    --text-gradient: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 85%) 100%);
+    --hero-gradient: linear-gradient(135deg, hsl(200, 95%, 45%) 0%, hsl(170, 85%, 50%) 100%);
+    --cta-gradient: linear-gradient(135deg, hsl(200, 95%, 45%) 0%, hsl(190, 90%, 40%) 100%);
+    --cta-hover-gradient: linear-gradient(135deg, hsl(190, 90%, 40%) 0%, hsl(180, 95%, 35%) 100%);
+    --card-gradient: linear-gradient(145deg, hsl(0, 0%, 100%) 0%, hsl(210, 20%, 98%) 100%);
+    --text-gradient: linear-gradient(135deg, hsl(200, 95%, 45%) 0%, hsl(170, 85%, 50%) 100%);
     
     /* Shadows */
-    --shadow-primary: 0 10px 40px -10px hsl(45, 95%, 55% / 0.3);
-    --shadow-card: 0 8px 32px -8px hsl(220, 15%, 5% / 0.4);
-    --shadow-hero: 0 25px 60px -10px hsl(220, 15%, 5% / 0.6);
+    --shadow-primary: 0 10px 40px -10px hsl(200, 95%, 45% / 0.25);
+    --shadow-card: 0 8px 32px -8px hsl(200, 95%, 45% / 0.08);
+    --shadow-hero: 0 25px 60px -10px hsl(200, 95%, 45% / 0.15);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -125,26 +125,26 @@ All colors MUST be HSL.
 @layer components {
   /* CTA Button Variants */
   .btn-cta {
-    @apply bg-gradient-to-br from-[hsl(45,95%,55%)] to-[hsl(42,98%,48%)] text-primary-foreground font-bold px-8 py-4 rounded-lg shadow-[0_10px_40px_-10px_hsl(45,95%,55%,0.3)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_hsl(45,95%,55%,0.4)] hover:scale-105 hover:bg-gradient-to-br hover:from-[hsl(42,98%,48%)] hover:to-[hsl(39,100%,45%)];
+    @apply bg-gradient-to-br from-[hsl(200,95%,45%)] to-[hsl(190,90%,40%)] text-primary-foreground font-bold px-8 py-4 rounded-lg shadow-[0_10px_40px_-10px_hsl(200,95%,45%,0.25)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_hsl(200,95%,45%,0.35)] hover:scale-105 hover:bg-gradient-to-br hover:from-[hsl(190,90%,40%)] hover:to-[hsl(180,95%,35%)];
   }
 
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground font-semibold px-6 py-3 rounded-lg border border-border hover:bg-accent transition-all duration-300;
+    @apply bg-secondary text-secondary-foreground font-semibold px-6 py-3 rounded-lg border border-border hover:bg-accent/10 transition-all duration-300;
   }
 
   /* Card Styles */
   .card-gradient {
-    @apply bg-gradient-to-br from-[hsl(220,10%,12%)] to-[hsl(220,8%,15%)] shadow-[0_8px_32px_-8px_hsl(220,15%,5%,0.4)];
+    @apply bg-gradient-to-br from-[hsl(0,0%,100%)] to-[hsl(210,20%,98%)] shadow-[0_8px_32px_-8px_hsl(200,95%,45%,0.08)] border border-border/50;
   }
 
   /* Hero Overlay */
   .hero-overlay {
-    @apply bg-gradient-to-r from-[hsl(220,15%,5%)] via-[hsl(220,15%,8%,0.8)] to-transparent;
+    @apply bg-gradient-to-r from-[hsl(200,95%,45%,0.9)] via-[hsl(170,85%,50%,0.8)] to-transparent;
   }
 
   /* Text Gradients */
   .text-gradient {
-    @apply bg-gradient-to-br from-[hsl(0,0%,100%)] to-[hsl(0,0%,85%)] bg-clip-text text-transparent;
+    @apply bg-gradient-to-br from-[hsl(200,95%,45%)] to-[hsl(170,85%,50%)] bg-clip-text text-transparent;
   }
 
   /* Animations */
