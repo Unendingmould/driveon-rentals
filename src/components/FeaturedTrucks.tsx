@@ -85,22 +85,22 @@ export default function FeaturedTrucks() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 md:gap-x-8 md:gap-y-16">
             {trucks.map((truck) => (
               <div key={truck.id} className="group cursor-pointer" onClick={() => setSelectedTruck(truck)}>
-                <div className="relative bg-muted/50 rounded-lg p-8 mb-4 aspect-square flex items-center justify-center overflow-hidden">
+                <div className="relative bg-muted/50 rounded-lg p-4 md:p-8 mb-3 md:mb-4 aspect-[4/3] md:aspect-square flex items-center justify-center overflow-hidden">
                   <img
                     src={truck.images[0]} // Show the first image
                     alt={truck.model}
                     className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <ArrowUpRight className="h-6 w-6 text-primary-foreground" />
+                  <div className="absolute top-3 right-3 md:top-4 md:right-4 h-8 w-8 md:h-10 md:w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ArrowUpRight className="h-4 w-4 md:h-6 md:w-6 text-primary-foreground" />
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground">{truck.model}</h3>
-                  <p className="text-muted-foreground">{truck.subtitle}</p>
+                  <h3 className="text-base md:text-lg font-semibold text-foreground">{truck.model}</h3>
+                  <p className="text-sm md:text-base text-muted-foreground">{truck.subtitle}</p>
                 </div>
               </div>
             ))}
