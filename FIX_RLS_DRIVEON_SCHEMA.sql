@@ -7,11 +7,12 @@
 
 -- Enable RLS on all tables in driveon schema
 ALTER TABLE driveon.trucks ENABLE ROW LEVEL SECURITY;
-ALTER TABLE driveon.truck_assets ENABLE ROW LEVEL SECURITY;
+ALTER TABLE driveon.truck_images ENABLE ROW LEVEL SECURITY;
 ALTER TABLE driveon.payment_options ENABLE ROW LEVEL SECURITY;
 ALTER TABLE driveon.orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE driveon.order_payments ENABLE ROW LEVEL SECURITY;
-ALTER TABLE driveon.user_activity ENABLE ROW LEVEL SECURITY;
+ALTER TABLE driveon.order_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE driveon.user_truck_activity ENABLE ROW LEVEL SECURITY;
 
 -- ============================================================================
 -- PUBLIC ACCESS POLICIES (No login needed)
@@ -92,15 +93,26 @@ WITH CHECK (
   )
 );
 
--- Users can view their own activity
-CREATE POLICY "Users can view their own activity"
-ON driveon.user_activity FOR SELECT
+-- Users can view their own truck activity
+CREATE POLICY "Users can view their own truck activity"
+ON driveon.user_truck_activity FOR SELECT
 USING (auth.uid() = user_id);
 
--- Users can insert their own activity
-CREATE POLICY "Users can insert their own activity"
-ON driveon.user_activity FOR INSERT
+-- Users can insert their own truck activity
+CREATE POLICY "Users can insert their own truck activity"
+ON driveon.user_truck_activity FOR INSERT
 WITH CHECK (auth.uid() = user_id);
+
+-- Users can view order events for their orders
+CREATE POLICY "Users can view their order events"
+ON driveon.order_events FOR SELECT
+USING (
+  EXISTS (
+    SELECT 1 FROM driveon.orders
+    WHERE driveon.orders.id = driveon.order_events.order_id
+    AND driveon.orders.user_id = auth.uid()
+  )
+);
 
 -- ============================================================================
 -- DONE! Refresh your browser and all 406 errors should be gone!
