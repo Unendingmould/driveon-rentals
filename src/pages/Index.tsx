@@ -22,6 +22,7 @@ const Index = () => {
         <Services />
         <HowItWorks />
         <WhyChooseUs />
+        <TruckPartners />
         <Testimonials />
         <FeaturedTrucks />
         <PaymentOptions />

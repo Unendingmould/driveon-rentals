@@ -72,8 +72,8 @@ export default function Contact() {
       <section className="bg-white pt-32 pb-16">
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-6xl md:text-8xl font-bold text-foreground">
-              Get in touch
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+              Get in Touch
             </h1>
           </div>
         </div>

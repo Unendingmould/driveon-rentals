@@ -102,9 +102,9 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="max-w-xl">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6">
                 We want to make truck ownership an option for everyone.
-              </h2>
+              </h1>
               <div className="space-y-6 text-muted-foreground text-lg">
                 <p>
                   At TrucksOnFlex, we believe truck ownership should be an option for everyone, regardless of your financial situation.

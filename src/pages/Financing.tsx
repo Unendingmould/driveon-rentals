@@ -92,7 +92,7 @@ const Financing = () => {
       <section className="bg-white pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
-            <h1 className="text-6xl md:text-8xl font-bold text-foreground leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
               Flexible financing & payment plans.
             </h1>
             <p className="mt-6 text-xl md:text-2xl text-muted-foreground">

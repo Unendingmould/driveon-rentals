@@ -109,7 +109,7 @@ export default function OrderForm() {
             <ArrowLeft className="w-4 h-4" />
             Back to Trucks
           </Link>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground">
             Secure Your Truck Today
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground">

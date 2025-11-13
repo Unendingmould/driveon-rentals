@@ -109,7 +109,7 @@ export default function FinancingForm() {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Financing
             </Button>
-            <h1 className="text-5xl md:text-7xl font-bold text-foreground">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
               Apply for Financing
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
