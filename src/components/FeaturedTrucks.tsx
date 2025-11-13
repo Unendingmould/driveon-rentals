@@ -108,6 +108,33 @@ export default function FeaturedTrucks() {
     return [];
   }, [trucks, isError, isLoading]);
 
+  if (isLoading) {
+    return (
+      <section id="trucks" className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-foreground">
+              Our Featured Trucks
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Explore a curated selection from our inventory. Each listing is quality-checked and road ready.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="space-y-4">
+                <Skeleton className="w-full aspect-square rounded-lg" />
+                <Skeleton className="h-6 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <>
       <section id="trucks" className="py-20 bg-background">
@@ -122,12 +149,12 @@ export default function FeaturedTrucks() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-            {trucks.map((truck) => (
+            {featured.map((truck) => (
               <div key={truck.id} className="group cursor-pointer" onClick={() => setSelectedTruck(truck)}>
                 <div className="relative bg-muted/50 rounded-lg p-8 mb-4 aspect-square flex items-center justify-center overflow-hidden">
                   <img
-                    src={truck.images[0]} // Show the first image
-                    alt={truck.model}
+                    src={truck.images[0]?.url || FALLBACK_IMAGE}
+                    alt={truck.images[0]?.alt || `${truck.make} ${truck.model}`}
                     className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -135,8 +162,10 @@ export default function FeaturedTrucks() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground">{truck.model}</h3>
-                  <p className="text-muted-foreground">{truck.subtitle}</p>
+                  <h3 className="text-lg font-semibold text-foreground">{truck.title}</h3>
+                  <p className="text-muted-foreground">
+                    {truck.model_year} • {truck.mileage?.toLocaleString()} miles
+                  </p>
                 </div>
               </div>
             ))}
