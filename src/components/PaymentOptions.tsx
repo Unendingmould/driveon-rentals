@@ -1,11 +1,38 @@
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Smartphone, Bitcoin } from "lucide-react";
+import { MessageCircle, Bitcoin, Smartphone, Zap } from "lucide-react";
+
+const hardcodedPaymentOptions = [
+  {
+    id: "1",
+    name: "Crypto",
+    description: "Pay with Bitcoin, Ethereum, or other cryptocurrencies",
+    icon: "bitcoin"
+  },
+  {
+    id: "2",
+    name: "Cash App",
+    description: "Quick and easy mobile payments",
+    icon: "cashapp"
+  },
+  {
+    id: "3",
+    name: "Zelle",
+    description: "Fast bank-to-bank transfers",
+    icon: "zelle"
+  }
+];
+
+const iconMap: Record<string, JSX.Element> = {
+  bitcoin: <Bitcoin className="w-10 h-10" />,
+  cashapp: <Smartphone className="w-10 h-10" />,
+  zelle: <Zap className="w-10 h-10" />,
+};
+
+function resolveIcon(key: string) {
+  return iconMap[key.toLowerCase()] ?? <Smartphone className="w-10 h-10" />;
+}
 
 export default function PaymentOptions() {
-  const paymentMethods = [
-    { name: "Cash App", icon: <Smartphone className="w-16 h-16" fill="currentColor" /> },
-    { name: "Bitcoin", icon: <Bitcoin className="w-16 h-16" fill="currentColor" /> }
-  ];
 
   const openWhatsApp = () => {
     window.open("https://wa.me/1234567890", "_blank");
@@ -18,33 +45,26 @@ export default function PaymentOptions() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
             Flexible Payment Methods
           </h2>
-          
+
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
-            Choose the option that works best for you – we accept Cash App and Bitcoin.
+            Choose the payment channel that fits your business. We support digital wallets, crypto, and traditional options.
           </p>
-          
-          {/* Payment Method Icons */}
-          <div className="flex flex-wrap justify-center gap-8 mb-12">
-            {paymentMethods.map((method, index) => (
-              <div 
-                key={method.name}
-                className="flex flex-col items-center gap-3 hover-lift fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-16 h-16 card-gradient rounded-2xl flex items-center justify-center text-primary">
-                  {method.icon}
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {hardcodedPaymentOptions.map((option) => (
+              <div key={option.id} className="card-gradient rounded-2xl p-6 flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-3xl border-2 border-primary/20 text-primary flex items-center justify-center mb-6">
+                  {resolveIcon(option.icon)}
                 </div>
-                <span className="text-sm font-medium text-foreground">
-                  {method.name}
-                </span>
+                <h3 className="text-xl font-semibold text-foreground">{option.name}</h3>
+                <p className="mt-3 text-muted-foreground text-sm leading-relaxed">{option.description}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* WhatsApp Support */}
         <div className="text-center">
-          <Button 
+          <Button
             onClick={openWhatsApp}
             variant="outline"
             className="btn-secondary text-lg px-8 py-4 inline-flex items-center gap-3"

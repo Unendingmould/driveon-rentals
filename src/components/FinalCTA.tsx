@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import heroTruck from "@/assets/hero-truck.jpg";
 
 export default function FinalCTA() {
   const handleGetTruck = () => {
@@ -10,7 +11,10 @@ export default function FinalCTA() {
     <section id="cta" className="relative py-32 overflow-hidden">
       {/* Background with overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/80">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=1920&h=1080&fit=crop&crop=center')] bg-cover bg-center opacity-20" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-20" 
+          style={{ backgroundImage: `url(${heroTruck})` }}
+        />
       </div>
       
       {/* Content */}

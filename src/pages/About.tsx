@@ -11,8 +11,11 @@ import serviceImage1 from "@/assets/truck-2-1.jpg";
 import serviceImage2 from "@/assets/truck-2-2.jpg";
 import serviceImage3 from "@/assets/truck-2-3.jpg";
 import serviceImage4 from "@/assets/truck-2-4.jpg";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 export default function About() {
+  usePageTitle("About");
+
   const [activeService, setActiveService] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<any>();
@@ -104,7 +107,7 @@ export default function About() {
               </h2>
               <div className="space-y-6 text-muted-foreground text-lg">
                 <p>
-                  At DriveOn Rentals, we believe truck ownership should be an option for everyone, regardless of your financial situation.
+                  At TrucksOnFlex, we believe truck ownership should be an option for everyone, regardless of your financial situation.
                 </p>
                 <p>
                   But today, due to the high upfront costs and financing challenges, many aspiring drivers and small businesses are locked out of the market. We're here to change that.
@@ -222,7 +225,7 @@ export default function About() {
               <Button className="btn-cta text-lg px-8 py-6 rounded-full">
                 Contact Us Now
               </Button>
-              <Button variant="outline" className="btn-secondary text-lg px-8 py-6 rounded-full">
+              <Button className="btn-secondary text-lg px-8 py-6 rounded-full hover:text-black">
                 View Available Trucks
               </Button>
             </div>

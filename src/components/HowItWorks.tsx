@@ -13,7 +13,7 @@ const steps = [
   },
   {
     title: 'Start Driving',
-    description: 'Once you\'ve selected your truck and plan, you\'re ready to go! Simply pay the deposit, pick up your keys, and hit the road. It\'s that easy to get started with DriveOn Rentals.',
+    description: 'Once you\'ve selected your truck and plan, you\'re ready to go! Simply pay the deposit, pick up your keys, and hit the road. It\'s that easy to get started with TrucksOnFlex.',
     image: '/src/assets/truck-1-3.jpg',
   },
 ];

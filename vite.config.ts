@@ -19,4 +19,25 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Separate vendor code for better caching
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-select',
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-tabs',
+          ],
+          'supabase': ['@supabase/supabase-js', '@supabase/auth-helpers-react'],
+          'query': ['@tanstack/react-query'],
+          'utils': ['date-fns', 'zod', 'lucide-react'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
+    sourcemap: mode === 'development',
+  },
 }));

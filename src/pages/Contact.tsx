@@ -9,10 +9,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, MapPin, MessageCircle, Send } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+
+  usePageTitle("Contact");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,28 +37,22 @@ export default function Contact() {
 
   const contactInfo = [
     {
-      icon: Phone,
-      label: "Call Us",
-      value: "+234-800-TRUCKS",
-      href: "tel:+2348008782257"
-    },
-    {
       icon: Mail,
       label: "Email",
-      value: "support@yourbrand.com",
-      href: "mailto:support@yourbrand.com"
+      value: "Getatruck@trucksonflex.com",
+      href: "mailto:Getatruck@trucksonflex.com"
     },
     {
       icon: MapPin,
       label: "Office Address",
-      value: "123 Logistics Road, Lagos, Nigeria",
-      href: "https://maps.google.com"
+      value: "1100 White St, Key West, FL 33040",
+      href: "https://maps.google.com/?q=1100+White+St,+Key+West,+FL+33040"
     },
     {
       icon: MessageCircle,
       label: "WhatsApp Support",
-      value: "+234-700-TRUCKS",
-      href: "https://wa.me/2347008782257"
+      value: "+1 (305) 518-5814",
+      href: "https://wa.me/13055185814"
     }
   ];
 
@@ -201,7 +198,7 @@ export default function Contact() {
             </h2>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {contactInfo.map((item, index) => (
               <Card key={index} className="card-gradient hover:hover-lift transition-all duration-300">
                 <CardContent className="p-6 text-center">
@@ -211,7 +208,7 @@ export default function Contact() {
                   <h3 className="font-semibold text-foreground mb-2">{item.label}</h3>
                   <a 
                     href={item.href}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-black transition-colors"
                   >
                     {item.value}
                   </a>

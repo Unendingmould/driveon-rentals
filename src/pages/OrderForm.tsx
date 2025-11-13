@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,6 +17,7 @@ import { ChevronDown, Shield, Lock, CheckCircle, ArrowLeft, Truck } from "lucide
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -32,7 +34,9 @@ export default function OrderForm() {
   const [isOpen, setIsOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { toast } = useToast();
-  
+
+  usePageTitle("Order");
+
   const truckId = searchParams.get("truck") || "1";
   
   // Mock truck data (in real app, this would come from API)
@@ -84,7 +88,7 @@ export default function OrderForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setShowConfirmation(true);
-    console.log(values);
+    // Form submitted successfully - data is in values
   }
 
   return (
@@ -94,11 +98,14 @@ export default function OrderForm() {
       {/* Hero Section */}
       <section className="relative py-20 pt-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/80">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=1920&h=1080&fit=crop&crop=center')] bg-cover bg-center opacity-20" />
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20" 
+            style={{ backgroundImage: "url(/hero-truck.jpg)" }}
+          />
         </div>
         
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Link to="/trucks" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6 transition-colors">
+          <Link to="/trucks" className="inline-flex items-center gap-2 text-foreground hover:text-black mb-6 transition-colors">
             <ArrowLeft className="w-4 h-4" />
             Back to Trucks
           </Link>
@@ -363,7 +370,6 @@ export default function OrderForm() {
           </div>
         </DialogContent>
       </Dialog>
-      <Footer />
     </div>
   );
 }

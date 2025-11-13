@@ -19,11 +19,11 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="max-w-4xl">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight text-white">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight text-white">
             Get ready for a<br />truck rental
           </h1>
           
-          <p className="text-xl md:text-2xl mb-12 text-white/90 max-w-2xl">
+          <p className="text-lg md:text-xl lg:text-2xl mb-12 text-white/90 max-w-2xl">
             Driving success through flexible 
             truck rental solutions.
           </p>

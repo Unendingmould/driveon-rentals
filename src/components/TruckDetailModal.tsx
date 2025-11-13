@@ -1,12 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { X } from 'lucide-react';
-import useEmblaCarousel from 'embla-carousel-react';
-import { Truck } from './FeaturedTrucks';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "./ui/button";
+import useEmblaCarousel from "embla-carousel-react";
+import type { TruckWithAssets } from "@/types/driveon";
+import truckPlaceholder from "@/assets/truck-1.jpg";
 
 interface TruckDetailModalProps {
-  truck: Truck;
+  truck: TruckWithAssets;
   onClose: () => void;
 }
+
+const DEFAULT_IMAGE = truckPlaceholder;
 
 const TruckDetailModal: React.FC<TruckDetailModalProps> = ({ truck, onClose }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -63,15 +67,19 @@ const TruckDetailModal: React.FC<TruckDetailModalProps> = ({ truck, onClose }) =
         <div className="w-1/2 bg-slate-100 p-8 flex flex-col justify-center">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
-              {truck.images.map((src, index) => (
-                <div className="flex-[0_0_100%] aspect-square" key={index}>
-                  <img src={src} alt={`${truck.model} view ${index + 1}`} className="w-full h-full object-contain" />
+              {(truck.images.length > 0 ? truck.images : [{ id: "fallback", url: DEFAULT_IMAGE, alt: truck.title, isPrimary: true, sortOrder: 0 }]).map((image, index) => (
+                <div className="flex-[0_0_100%] aspect-square" key={image.id ?? index}>
+                  <img
+                    src={image.url ?? DEFAULT_IMAGE}
+                    alt={image.alt ?? `${truck.title} view ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               ))}
             </div>
           </div>
           <div className="flex justify-center gap-2 mt-4">
-            {truck.images.map((_, index) => (
+            {(truck.images.length > 0 ? truck.images : [{ id: "fallback" } as const]).map((_, index) => (
               <button
                 key={index}
                 onClick={() => emblaApi?.scrollTo(index)}
@@ -83,32 +91,60 @@ const TruckDetailModal: React.FC<TruckDetailModalProps> = ({ truck, onClose }) =
 
         {/* Right Column: Scrollable Content */}
         <div className="w-1/2 p-12 overflow-y-auto">
-          <h2 className="text-4xl font-bold mb-4">{truck.model}</h2>
-          
+          <h2 className="text-4xl font-bold mb-2">{truck.title}</h2>
+          <p className="text-muted-foreground mb-8">
+            {[truck.make, truck.model, truck.model_year ? `(${truck.model_year})` : null]
+              .filter(Boolean)
+              .join(" • ") || truck.short_description}
+          </p>
+
           <div className="space-y-8 text-gray-600">
             <div>
               <h3 className="text-lg font-semibold text-black mb-2">Product description</h3>
-              <p>{truck.description}</p>
+              <p>{truck.description ?? truck.short_description ?? "Detailed description coming soon."}</p>
             </div>
 
             <div>
               <h3 className="text-lg font-semibold text-black mb-4">Features</h3>
               <div className="space-y-3">
-                {Object.entries(truck.features).map(([key, value]) => (
-                  <div key={key} className="flex justify-between border-b pb-3">
-                    <span className="text-gray-500">{key}</span>
-                    <span className="font-medium text-black">{value}</span>
-                  </div>
-                ))}
+                {[
+                  { key: "Make", value: truck.make },
+                  { key: "Model", value: truck.model },
+                  { key: "Year", value: truck.model_year },
+                  { key: "Mileage", value: truck.mileage ? `${truck.mileage.toLocaleString()} miles` : null },
+                  { key: "Engine", value: truck.engine },
+                  { key: "Transmission", value: truck.transmission },
+                  { key: "VIN", value: truck.vin },
+                  { key: "Condition", value: truck.condition },
+                  { key: "Warranty", value: truck.warranty },
+                  { key: "Weekly Rate", value: truck.weekly_rate ? `$${Number(truck.weekly_rate).toLocaleString()}` : null },
+                  { key: "Monthly Rate", value: truck.monthly_rate ? `$${Number(truck.monthly_rate).toLocaleString()}` : null },
+                  { key: "Axles", value: truck.axles },
+                  { key: "Suspension", value: truck.suspension },
+                  { key: "Exterior", value: truck.exterior_color },
+                  { key: "Interior", value: truck.interior_color },
+                ]
+                  .filter((item) => item.value)
+                  .map((item) => (
+                    <div key={item.key} className="flex justify-between border-b pb-3">
+                      <span className="text-gray-500">{item.key}</span>
+                      <span className="font-medium text-black">{item.value}</span>
+                    </div>
+                  ))}
               </div>
             </div>
 
             <div>
               <h3 className="text-lg font-semibold text-black mb-4">Applications</h3>
               <div className="flex flex-wrap gap-2">
-                {truck.applications.map((app) => (
-                  <span key={app} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
-                    {app}
+                {(() => {
+                  const derivedTags = truck.images
+                    .map((image) => image.alt)
+                    .filter((value): value is string => Boolean(value));
+                  return derivedTags.length > 0 ? derivedTags : ["Heavy-duty", "Long Haul", "Reliable"];
+                })().map((tag) => (
+                  <span key={tag} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+                    {tag}
                   </span>
                 ))}
               </div>

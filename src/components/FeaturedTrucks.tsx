@@ -1,79 +1,112 @@
-import { useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
-import TruckDetailModal from './TruckDetailModal'; // Assuming the new component is in the same directory
+import { useMemo, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import TruckDetailModal from "./TruckDetailModal";
+import { useTrucks } from "@/hooks/useDriveonData";
+import { Skeleton } from "@/components/ui/skeleton";
+import type { TruckWithAssets } from "@/types/driveon";
+import truck1 from "@/assets/truck-1.jpg";
+import truck2 from "@/assets/truck-2.jpg";
+import truck3 from "@/assets/truck-3.jpg";
 
-export interface Truck {
-  id: string;
-  model: string;
-  subtitle: string;
-  images: string[];
-  description: string;
-  features: { [key: string]: string };
-  applications: string[];
-}
+const FALLBACK_IMAGE = truck1;
 
-const trucks: Truck[] = [
+// Placeholder trucks for when database is empty or fails
+const PLACEHOLDER_TRUCKS: TruckWithAssets[] = [
   {
-    id: '1',
-    model: 'Freightliner Cascadia',
-    subtitle: 'Heavy-Duty Hauler',
-    images: [
-      '/src/assets/truck-1-1.jpg',
-      '/src/assets/truck-1-2.jpg',
-      '/src/assets/truck-1-3.jpg',
-      '/src/assets/truck-1-4.jpg',
-    ],
-    description: 'The Freightliner Cascadia is the most advanced on-highway truck Freightliner has ever offered. Its robust design and fuel-efficient engineering make it a top choice for long-haul applications.',
-    features: {
-      'Engine': 'Detroit DD15 Gen 5',
-      'Horsepower': '455-505 HP',
-      'Transmission': 'Detroit DT12 On-Highway Series',
-      'Sleeper': '72" Raised Roof',
-    },
-    applications: ['Long Haul', 'Regional Distribution', 'Bulk Hauling'],
+    id: "placeholder-1",
+    slug: "2020-volvo-vnl",
+    title: "2020 Volvo VNL",
+    make: "Volvo",
+    model: "VNL",
+    model_year: 2020,
+    mileage: 45000,
+    weekly_rate: 1200,
+    monthly_rate: 4500,
+    status: "available",
+    images: [{ id: "img-1", url: FALLBACK_IMAGE, alt: "Volvo VNL Truck", isPrimary: true, sortOrder: 0 }],
+    engine: null,
+    transmission: null,
+    vin: null,
+    exterior_color: null,
+    interior_color: null,
+    suspension: null,
+    axles: null,
+    condition: null,
+    warranty: null,
+    short_description: null,
+    description: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
   {
-    id: '2',
-    model: 'Peterbilt 579',
-    subtitle: 'Sleeper Cab',
-    images: [
-      '/src/assets/truck-2-1.jpg',
-      '/src/assets/truck-2-2.jpg',
-      '/src/assets/truck-2-3.jpg',
-      '/src/assets/truck-2-4.jpg',
-    ],
-    description: 'Known for its aerodynamic design and superior fuel efficiency, the Peterbilt 579 is a driver-favorite. It offers a comfortable, spacious interior and a smooth, quiet ride.',
-    features: {
-      'Engine': 'PACCAR MX-13',
-      'Horsepower': '405-510 HP',
-      'Transmission': 'PACCAR TX-12 Automated',
-      'Sleeper': '80" UltraLoft Sleeper',
-    },
-    applications: ['Temperature-Controlled', 'Tanker', 'General Freight'],
+    id: "placeholder-2",
+    slug: "2019-freightliner-cascadia",
+    title: "2019 Freightliner Cascadia",
+    make: "Freightliner",
+    model: "Cascadia",
+    model_year: 2019,
+    mileage: 67000,
+    weekly_rate: 1100,
+    monthly_rate: 4200,
+    status: "available",
+    images: [{ id: "img-2", url: truck2, alt: "Freightliner Cascadia", isPrimary: true, sortOrder: 0 }],
+    engine: null,
+    transmission: null,
+    vin: null,
+    exterior_color: null,
+    interior_color: null,
+    suspension: null,
+    axles: null,
+    condition: null,
+    warranty: null,
+    short_description: null,
+    description: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
   {
-    id: '3',
-    model: 'Kenworth T680',
-    subtitle: 'Aerodynamic Efficiency',
-    images: [
-      '/src/assets/truck-3-1.jpg',
-      '/src/assets/truck-3-2.jpg',
-      '/src/assets/truck-3-3.jpg',
-      '/src/assets/truck-3-4.jpg',
-    ],
-    description: 'The Kenworth T680 sets a high standard for aerodynamic performance and driver comfort. It\'s a reliable and efficient choice for a wide range of applications.',
-    features: {
-      'Engine': 'PACCAR MX-13',
-      'Horsepower': '405-510 HP',
-      'Transmission': 'PACCAR TX-18 Automated',
-      'Sleeper': '76" High-Roof Sleeper',
-    },
-    applications: ['Flatbed', 'Intermodal', 'Less-Than-Truckload'],
+    id: "placeholder-3",
+    slug: "2021-kenworth-t680",
+    title: "2021 Kenworth T680",
+    make: "Kenworth",
+    model: "T680",
+    model_year: 2021,
+    mileage: 32000,
+    weekly_rate: 1300,
+    monthly_rate: 4800,
+    status: "available",
+    images: [{ id: "img-3", url: truck3, alt: "Kenworth T680", isPrimary: true, sortOrder: 0 }],
+    engine: null,
+    transmission: null,
+    vin: null,
+    exterior_color: null,
+    interior_color: null,
+    suspension: null,
+    axles: null,
+    condition: null,
+    warranty: null,
+    short_description: null,
+    description: null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
 ];
 
 export default function FeaturedTrucks() {
-  const [selectedTruck, setSelectedTruck] = useState<Truck | null>(null);
+  const { data: trucks, isLoading, isError } = useTrucks();
+  const [selectedTruck, setSelectedTruck] = useState<TruckWithAssets | null>(null);
+
+  const featured = useMemo(() => {
+    // Use real trucks if available, otherwise use placeholders
+    if (trucks && trucks.length > 0) {
+      return trucks.slice(0, 3);
+    }
+    // Use placeholders if loading failed or no data
+    if (isError || !isLoading) {
+      return PLACEHOLDER_TRUCKS;
+    }
+    return [];
+  }, [trucks, isError, isLoading]);
 
   return (
     <>
@@ -83,28 +116,53 @@ export default function FeaturedTrucks() {
             <h2 className="text-3xl md:text-5xl font-bold mb-4 text-foreground">
               Our Featured Trucks
             </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Explore a curated selection from our inventory. Each listing is quality-checked and road ready.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-            {trucks.map((truck) => (
-              <div key={truck.id} className="group cursor-pointer" onClick={() => setSelectedTruck(truck)}>
-                <div className="relative bg-muted/50 rounded-lg p-8 mb-4 aspect-square flex items-center justify-center overflow-hidden">
-                  <img
-                    src={truck.images[0]} // Show the first image
-                    alt={truck.model}
-                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <ArrowUpRight className="h-6 w-6 text-primary-foreground" />
-                  </div>
+          {isLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="space-y-4">
+                  <Skeleton className="aspect-square w-full rounded-lg" />
+                  <Skeleton className="h-6 w-2/3" />
+                  <Skeleton className="h-4 w-1/2" />
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">{truck.model}</h3>
-                  <p className="text-muted-foreground">{truck.subtitle}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+              {featured.map((truck) => {
+                const heroImage = truck.images[0];
+                return (
+                  <button
+                    key={truck.id}
+                    type="button"
+                    className="group text-left min-h-11 w-full"
+                    onClick={() => setSelectedTruck(truck)}
+                  >
+                    <div className="relative bg-muted/50 rounded-lg p-8 mb-4 aspect-square flex items-center justify-center overflow-hidden border border-border/60 shadow-sm hover:shadow-md transition-shadow">
+                      <img
+                        src={heroImage?.url ?? FALLBACK_IMAGE}
+                        alt={heroImage?.alt ?? truck.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <ArrowUpRight className="h-6 w-6 text-primary-foreground" />
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground">{truck.title}</h3>
+                      <p className="text-muted-foreground">
+                        {[truck.make, truck.model, truck.model_year ?? undefined].filter(Boolean).join(" • ") || "TrucksOnFlex Fleet"}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 

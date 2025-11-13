@@ -4,8 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { usePageTitle } from "@/hooks/usePageTitle";
+import { Link } from "react-router-dom";
 
 const Financing = () => {
+  usePageTitle("Financing");
+
   const plans = [
     {
       name: "Standard Plan",
@@ -163,9 +167,11 @@ const Financing = () => {
                     ))}
                   </div>
                   
-                  <Button className="w-full btn-cta mt-6 rounded-full">
-                    {plan.cta}
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                  <Button className="w-full btn-cta mt-6 rounded-full" asChild>
+                    <Link to="/financing/apply">
+                      {plan.cta}
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -186,16 +192,16 @@ const Financing = () => {
             </p>
           </div>
 
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <Accordion type="single" collapsible className="w-full max-w-4xl mx-auto space-y-4">
             {steps.map((step, index) => (
               <AccordionItem key={index} value={`item-${index}`} className="border-b">
                 <AccordionTrigger noChevron className="flex justify-between items-center w-full py-6 text-left font-semibold text-foreground hover:no-underline group">
-                  <div className="flex items-center">
-                    <span className="text-lg text-muted-foreground mr-8">{`0${index + 1}`}</span>
+                  <div className="flex items-center flex-1 min-w-0">
+                    <span className="text-lg text-muted-foreground mr-8 flex-shrink-0">{`0${index + 1}`}</span>
                     <span className="text-lg">{step.question}</span>
                   </div>
-                  <div className="h-10 w-10 bg-primary rounded-full flex items-center justify-center transform transition-transform duration-300 group-data-[state=open]:rotate-45">
-                    <Plus className="h-6 w-6 text-primary-foreground" />
+                  <div className="h-10 w-10 bg-yellow-400 rounded-full flex items-center justify-center transform transition-transform duration-300 group-data-[state=open]:rotate-45 flex-shrink-0 ml-4">
+                    <Plus className="h-6 w-6 text-black" />
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-6 pl-16">
@@ -216,9 +222,11 @@ const Financing = () => {
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Apply today and get approved for your truck financing.
           </p>
-          <Button className="btn-cta text-lg px-8 py-4 rounded-full">
-            Apply for Financing
-            <ArrowRight className="w-5 h-5 ml-2" />
+          <Button className="btn-cta text-lg px-8 py-4 rounded-full" asChild>
+            <Link to="/financing/apply">
+              Apply for Financing
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Link>
           </Button>
         </div>
       </section>
