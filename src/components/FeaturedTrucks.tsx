@@ -156,7 +156,7 @@ export default function FeaturedTrucks() {
                 onClick={() => setSelectedTruck(truck)}
               >
                 {/* Modern Card with Border */}
-                <div className="relative bg-white dark:bg-card rounded-xl border-2 border-border hover:border-primary/50 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl h-full flex flex-col">
+                <div className="relative bg-white dark:bg-card rounded-xl border-2 border-border transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl h-full flex flex-col">
                   
                   {/* Image Container - Fixed Aspect Ratio */}
                   <div className="relative w-full aspect-[4/3] bg-muted/30 overflow-hidden">
@@ -182,7 +182,7 @@ export default function FeaturedTrucks() {
                   {/* Content Container - Aligned Properly */}
                   <div className="flex flex-col flex-1 p-4 sm:p-5 md:p-6">
                     {/* Title */}
-                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground mb-2 line-clamp-1 group-hover:text-primary transition-colors">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground mb-2 line-clamp-1">
                       {truck.title}
                     </h3>
 

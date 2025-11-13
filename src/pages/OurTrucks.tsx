@@ -337,10 +337,20 @@ export default function OurTrucks() {
                         <p className="text-sm text-muted-foreground mb-3">
                           {[truck.make, truck.model, truck.model_year ?? undefined].filter(Boolean).join(" • ")}
                         </p>
-                        <div className="mt-2 text-lg font-semibold text-foreground">
-                          {deriveListingType(truck) === "rental"
-                            ? (formatHourly(truck) ?? "Rate on request")
-                            : (formatCurrency((truck as any)?.sale_price as number) ?? formatCurrency(truck.monthly_rate) ?? "Price on request")}
+                        <div className="mt-2 space-y-1">
+                          {deriveListingType(truck) === "rental" ? (
+                            <>
+                              <p className="text-xs text-muted-foreground">Starting from</p>
+                              <p className="text-lg font-bold text-primary">
+                                {formatCurrency(truck.weekly_rate)}
+                                <span className="text-sm font-normal text-muted-foreground">/week</span>
+                              </p>
+                            </>
+                          ) : (
+                            <p className="text-lg font-bold text-foreground">
+                              {formatCurrency((truck as any)?.sale_price as number) ?? formatCurrency(truck.monthly_rate) ?? "Price on request"}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <div className="mt-4 flex flex-col sm:flex-row gap-2">
