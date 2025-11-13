@@ -16,9 +16,9 @@ const Index = () => {
   usePageTitle("Home");
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Navigation />
-      <main id="main-content">
+      <main id="main-content" className="relative">
         <HeroSection />
         <Services />
         <HowItWorks />
