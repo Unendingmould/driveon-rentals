@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import heroTruck from "@/assets/hero-truck.jpg";
 
 export default function FinalCTA() {
+  const navigate = useNavigate();
+  
   const handleGetTruck = () => {
-    // In a real app, this would open a form or redirect to checkout
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate('/trucks');
   };
 
   return (

@@ -222,12 +222,16 @@ export default function About() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="btn-cta text-lg px-8 py-6 rounded-full">
-                Contact Us Now
-              </Button>
-              <Button className="btn-secondary text-lg px-8 py-6 rounded-full hover:text-black">
-                View Available Trucks
-              </Button>
+              <Link to="/contact">
+                <Button className="btn-cta text-lg px-8 py-6 rounded-full">
+                  Contact Us Now
+                </Button>
+              </Link>
+              <Link to="/trucks">
+                <Button className="btn-secondary text-lg px-8 py-6 rounded-full hover:text-black">
+                  View Available Trucks
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
