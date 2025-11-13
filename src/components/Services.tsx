@@ -48,7 +48,7 @@ export default function Services() {
               <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
                   <span className="text-sm sm:text-base font-bold text-primary">
-                    {String(index + 1).padStart(2, \"0\")}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
               </div>
