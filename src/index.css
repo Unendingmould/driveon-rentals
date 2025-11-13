@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent horizontal scroll and ensure mobile responsiveness */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Ensure smooth vertical-only scrolling */
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: none;
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */

@@ -319,12 +319,12 @@ export default function OurTrucks() {
               <p className="text-muted-foreground max-w-xl mx-auto">Try adjusting your search or filters.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
               {displayTrucks.map((truck) => {
                 const heroImage = truck.images[0];
                 return (
                   <div key={truck.id} className="group">
-                    <div className="rounded-lg border border-border/60 p-4 bg-white">
+                    <div className="rounded-lg border border-border/60 p-4 bg-white shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
                       <div className="relative rounded-md bg-muted/50 mb-4 aspect-square overflow-hidden flex items-center justify-center">
                         <img
                           src={heroImage?.url ?? truck1}
@@ -332,22 +332,22 @@ export default function OurTrucks() {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">{truck.title}</h3>
-                        <p className="text-muted-foreground">
+                      <div className="flex-grow">
+                        <h3 className="text-lg font-semibold text-foreground mb-1">{truck.title}</h3>
+                        <p className="text-sm text-muted-foreground mb-3">
                           {[truck.make, truck.model, truck.model_year ?? undefined].filter(Boolean).join(" • ")}
                         </p>
-                        <div className="mt-2 font-semibold text-foreground">
+                        <div className="mt-2 text-lg font-semibold text-foreground">
                           {deriveListingType(truck) === "rental"
                             ? (formatHourly(truck) ?? "Rate on request")
                             : (formatCurrency((truck as any)?.sale_price as number) ?? formatCurrency(truck.monthly_rate) ?? "Price on request")}
                         </div>
                       </div>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        <Button variant="secondary" onClick={() => setSelectedTruck(truck)}>
+                      <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                        <Button variant="secondary" onClick={() => setSelectedTruck(truck)} className="flex-1">
                           View details
                         </Button>
-                        <Button className="btn-cta" asChild>
+                        <Button className="btn-cta flex-1" asChild>
                           <Link to={session ? `/trucks/${truck.slug}/checkout?mode=${deriveListingType(truck)}` : `/auth?redirect=/trucks/${truck.slug}/checkout?mode=${deriveListingType(truck)}`}>
                             {deriveListingType(truck) === "rental" ? "Rent now" : "Buy now"}
                           </Link>

@@ -142,21 +142,23 @@ export default function FeaturedTrucks() {
                     className="group text-left min-h-11 w-full"
                     onClick={() => setSelectedTruck(truck)}
                   >
-                    <div className="relative bg-muted/50 rounded-lg p-8 mb-4 aspect-square flex items-center justify-center overflow-hidden border border-border/60 shadow-sm hover:shadow-md transition-shadow">
-                      <img
-                        src={heroImage?.url ?? FALLBACK_IMAGE}
-                        alt={heroImage?.alt ?? truck.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <ArrowUpRight className="h-6 w-6 text-primary-foreground" />
+                    <div className="rounded-lg border border-border/60 p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+                      <div className="relative rounded-md bg-muted/50 mb-4 aspect-square overflow-hidden flex items-center justify-center">
+                        <img
+                          src={heroImage?.url ?? FALLBACK_IMAGE}
+                          alt={heroImage?.alt ?? truck.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <ArrowUpRight className="h-6 w-6 text-primary-foreground" />
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground">{truck.title}</h3>
-                      <p className="text-muted-foreground">
-                        {[truck.make, truck.model, truck.model_year ?? undefined].filter(Boolean).join(" • ") || "TrucksOnFlex Fleet"}
-                      </p>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-1">{truck.title}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {[truck.make, truck.model, truck.model_year ?? undefined].filter(Boolean).join(" • ") || "TrucksOnFlex Fleet"}
+                        </p>
+                      </div>
                     </div>
                   </button>
                 );
