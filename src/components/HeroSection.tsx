@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import heroTruckImage from "@/assets/hero-truck.jpg";
 
 export default function HeroSection() {
-  const scrollToTrucks = () => {
-    document.getElementById('trucks')?.scrollIntoView({ behavior: 'smooth' });
+  const navigate = useNavigate();
+  
+  const goToTrucks = () => {
+    navigate('/trucks');
   };
 
   return (

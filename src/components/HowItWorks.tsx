@@ -1,20 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
+import truck1 from '@/assets/truck-1-1.jpg';
+import truck2 from '@/assets/truck-1-2.jpg';
+import truck3 from '@/assets/truck-1-3.jpg';
 
 const steps = [
   {
     title: 'Pick Your Truck',
     description: 'Browse our wide selection of top-quality trucks. We have models for every need, from heavy-duty haulers to nimble city movers. Detailed specifications and photos are available for each vehicle to help you make an informed choice.',
-    image: '/src/assets/truck-1-1.jpg',
+    image: truck1,
   },
   {
     title: 'Choose Your Plan',
     description: 'We offer flexible rental plans to suit your schedule and budget. Choose from weekly, monthly, or even quarterly options. Our team is here to help you find the perfect plan for your needs.',
-    image: '/src/assets/truck-1-2.jpg',
+    image: truck2,
   },
   {
     title: 'Start Driving',
     description: 'Once you\'ve selected your truck and plan, you\'re ready to go! Simply pay the deposit, pick up your keys, and hit the road. It\'s that easy to get started with TrucksOnFlex.',
-    image: '/src/assets/truck-1-3.jpg',
+    image: truck3,
   },
 ];
 
