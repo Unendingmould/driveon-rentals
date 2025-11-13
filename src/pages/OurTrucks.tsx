@@ -319,42 +319,70 @@ export default function OurTrucks() {
               <p className="text-muted-foreground max-w-xl mx-auto">Try adjusting your search or filters.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
               {displayTrucks.map((truck) => {
                 const heroImage = truck.images[0];
                 return (
-                  <div key={truck.id} className="group">
-                    <div className="rounded-lg border border-border/60 p-4 bg-white shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
-                      <div className="relative rounded-md bg-muted/50 mb-4 aspect-square overflow-hidden flex items-center justify-center">
+                  <div key={truck.id} className="group cursor-pointer" onClick={() => setSelectedTruck(truck)}>
+                    {/* Modern Card with Border - Matches FeaturedTrucks */}
+                    <div className="relative bg-white dark:bg-card rounded-xl border-2 border-border transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl h-full flex flex-col">
+                      
+                      {/* Image Container - Fixed Aspect Ratio */}
+                      <div className="relative w-full aspect-[4/3] bg-muted/30 overflow-hidden">
                         <img
                           src={heroImage?.url ?? truck1}
                           alt={heroImage?.alt ?? truck.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
+                        
+                        {/* Status Badge */}
+                        <div className="absolute top-3 left-3">
+                          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
+                            Available
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex-grow">
-                        <h3 className="text-lg font-semibold text-foreground mb-1">{truck.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">
+
+                      {/* Content Container */}
+                      <div className="flex flex-col flex-1 p-4 sm:p-5 md:p-6">
+                        {/* Title */}
+                        <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground mb-2 line-clamp-1">
+                          {truck.title}
+                        </h3>
+
+                        {/* Details */}
+                        <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
                           {[truck.make, truck.model, truck.model_year ?? undefined].filter(Boolean).join(" • ")}
                         </p>
-                        <div className="mt-2 space-y-1">
+
+                        {/* Pricing */}
+                        <div className="mt-auto space-y-1">
                           {deriveListingType(truck) === "rental" ? (
                             <>
                               <p className="text-xs text-muted-foreground">Starting from</p>
-                              <p className="text-lg font-bold text-primary">
+                              <p className="text-lg sm:text-xl font-bold text-primary">
                                 {formatCurrency(truck.weekly_rate)}
                                 <span className="text-sm font-normal text-muted-foreground">/week</span>
                               </p>
                             </>
                           ) : (
-                            <p className="text-lg font-bold text-foreground">
+                            <p className="text-lg sm:text-xl font-bold text-foreground">
                               {formatCurrency((truck as any)?.sale_price as number) ?? formatCurrency(truck.monthly_rate) ?? "Price on request"}
                             </p>
                           )}
                         </div>
                       </div>
-                      <div className="mt-4 flex flex-col sm:flex-row gap-2">
-                        <Button variant="secondary" onClick={() => setSelectedTruck(truck)} className="flex-1">
+
+                      {/* Action Buttons */}
+                      <div className="p-4 pt-0 sm:p-5 sm:pt-0 md:p-6 md:pt-0 flex flex-col sm:flex-row gap-2">
+                        <Button 
+                          variant="secondary" 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedTruck(truck);
+                          }} 
+                          className="flex-1"
+                        >
                           View details
                         </Button>
                         <Button className="btn-cta flex-1" asChild>
