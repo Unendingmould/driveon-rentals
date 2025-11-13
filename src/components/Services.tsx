@@ -1,25 +1,29 @@
-import { Truck, ArrowRight } from "lucide-react";
+import { User, TrendingUp, Calendar, Wrench } from "lucide-react";
 
 const hardcodedServices = [
   {
     id: "1",
     title: "Owner Operators",
-    subtitle: "Flexible rental terms for independent truckers building their business"
+    subtitle: "Flexible rental terms for independent truckers building their business",
+    icon: User
   },
   {
     id: "2",
     title: "Fleet Expansion",
-    subtitle: "Scale your operations with our reliable commercial truck fleet"
+    subtitle: "Scale your operations with our reliable commercial truck fleet",
+    icon: TrendingUp
   },
   {
     id: "3",
     title: "Seasonal Demand",
-    subtitle: "Short-term rentals to handle peak shipping seasons"
+    subtitle: "Short-term rentals to handle peak shipping seasons",
+    icon: Calendar
   },
   {
     id: "4",
     title: "Emergency Replacement",
-    subtitle: "Quick turnaround when your truck is down for maintenance"
+    subtitle: "Quick turnaround when your truck is down for maintenance",
+    icon: Wrench
   }
 ];
 
@@ -38,37 +42,40 @@ export default function Services() {
         </div>
 
         {/* Solution Cards - Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
-          {hardcodedServices.map((service, index) => (
-            <div
-              key={service.id}
-              className="group relative bg-white dark:bg-card rounded-2xl border-2 border-border p-6 sm:p-8 transition-all duration-300 hover:shadow-lg"
-            >
-              {/* Number Badge */}
-              <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
-                  <span className="text-sm sm:text-base font-bold text-primary">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          {hardcodedServices.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <div
+                key={service.id}
+                className="group relative bg-white dark:bg-card rounded-xl border border-border p-5 sm:p-6 transition-all duration-300"
+              >
+                {/* Number Badge */}
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+                    <span className="text-xs sm:text-sm font-bold text-primary">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Icon */}
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center mb-4 sm:mb-5 transition-transform group-hover:scale-110 duration-300">
+                  <Icon className="h-6 w-6 sm:h-7 sm:w-7" />
+                </div>
+
+                {/* Content */}
+                <div>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {service.subtitle}
+                  </p>
                 </div>
               </div>
-
-              {/* Icon */}
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center mb-5 sm:mb-6 transition-transform group-hover:scale-110 duration-300">
-                <Truck className="h-7 w-7 sm:h-8 sm:w-8" />
-              </div>
-
-              {/* Content */}
-              <div>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-2 sm:mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  {service.subtitle}
-                </p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

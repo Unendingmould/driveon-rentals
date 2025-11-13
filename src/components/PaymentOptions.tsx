@@ -39,56 +39,38 @@ export default function PaymentOptions() {
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-gradient-to-b from-background to-muted/20">
+    <section className="py-20 bg-secondary/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-10 sm:mb-12 md:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-foreground">
-            Flexible Payment Solutions
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+            Flexible Payment Methods
           </h2>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto">
-            We accept multiple payment methods for your convenience
+
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
+            Choose the payment channel that fits your business. We support digital wallets, crypto, and traditional options.
           </p>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {hardcodedPaymentOptions.map((option) => (
+              <div key={option.id} className="card-gradient rounded-2xl p-6 flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-3xl border-2 border-primary/20 text-primary flex items-center justify-center mb-6">
+                  {resolveIcon(option.icon)}
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">{option.name}</h3>
+                <p className="mt-3 text-muted-foreground text-sm leading-relaxed">{option.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Payment Cards - Clean Layout Without CTA */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-          {hardcodedPaymentOptions.map((option) => (
-            <div 
-              key={option.id} 
-              className="group relative bg-white dark:bg-card rounded-2xl border-2 border-border p-6 sm:p-8 transition-all duration-300 hover:shadow-lg"
-            >
-              {/* Icon */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center mb-5 sm:mb-6 transition-transform group-hover:scale-110 duration-300">
-                {resolveIcon(option.icon)}
-              </div>
-
-              {/* Content */}
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">
-                  {option.name}
-                </h3>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  {option.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Help Section - Subtle */}
-        <div className="mt-12 sm:mt-16 text-center">
-          <p className="text-sm text-muted-foreground mb-4">
-            Questions about payment methods?
-          </p>
+        <div className="text-center">
           <Button
             onClick={openWhatsApp}
             variant="outline"
-            size="lg"
-            className="gap-2 hover:bg-primary hover:text-primary-foreground transition-colors"
+            className="btn-secondary text-lg px-8 py-4 inline-flex items-center gap-3"
           >
-            <MessageCircle className="w-5 h-5" />
-            Contact Support
+            <MessageCircle className="w-6 h-6 text-primary" />
+            Need help? Chat with us now
           </Button>
         </div>
       </div>
