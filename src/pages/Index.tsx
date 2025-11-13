@@ -5,6 +5,7 @@ import HowItWorks from "@/components/HowItWorks";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Testimonials from "@/components/Testimonials";
 import FeaturedTrucks from "@/components/FeaturedTrucks";
+import TruckPartners from "@/components/TruckPartners";
 import PaymentOptions from "@/components/PaymentOptions";
 import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
