@@ -121,50 +121,26 @@ export default function FeaturedTrucks() {
             </p>
           </div>
 
-          {isLoading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <div key={index} className="space-y-4">
-                  <Skeleton className="aspect-square w-full rounded-lg" />
-                  <Skeleton className="h-6 w-2/3" />
-                  <Skeleton className="h-4 w-1/2" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            {trucks.map((truck) => (
+              <div key={truck.id} className="group cursor-pointer" onClick={() => setSelectedTruck(truck)}>
+                <div className="relative bg-muted/50 rounded-lg p-8 mb-4 aspect-square flex items-center justify-center overflow-hidden">
+                  <img
+                    src={truck.images[0]} // Show the first image
+                    alt={truck.model}
+                    className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ArrowUpRight className="h-6 w-6 text-primary-foreground" />
+                  </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-              {featured.map((truck) => {
-                const heroImage = truck.images[0];
-                return (
-                  <button
-                    key={truck.id}
-                    type="button"
-                    className="group text-left min-h-11 w-full"
-                    onClick={() => setSelectedTruck(truck)}
-                  >
-                    <div className="rounded-lg border border-border/60 p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
-                      <div className="relative rounded-md bg-muted/50 mb-4 aspect-square overflow-hidden flex items-center justify-center">
-                        <img
-                          src={heroImage?.url ?? FALLBACK_IMAGE}
-                          alt={heroImage?.alt ?? truck.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div className="absolute top-4 right-4 h-10 w-10 bg-primary rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <ArrowUpRight className="h-6 w-6 text-primary-foreground" />
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-1">{truck.title}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {[truck.make, truck.model, truck.model_year ?? undefined].filter(Boolean).join(" • ") || "TrucksOnFlex Fleet"}
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          )}
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">{truck.model}</h3>
+                  <p className="text-muted-foreground">{truck.subtitle}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
