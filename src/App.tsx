@@ -14,6 +14,7 @@ import Financing from "./pages/Financing";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import ScrollToTop from "@/components/ScrollToTop";
 
 // Lazy load heavy authenticated pages for better performance
 const TruckCheckout = lazy(() => import("./pages/TruckCheckout"));
