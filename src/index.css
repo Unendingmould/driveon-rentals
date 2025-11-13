@@ -132,6 +132,11 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+  }
+  
+  #root {
+    @apply min-h-screen bg-background;
   }
 
   /* Accessibility: Focus indicators for keyboard navigation */
