@@ -19,18 +19,74 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
+        manualChunks: (id) => {
           // Separate vendor code for better caching
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': [
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-select',
-            '@radix-ui/react-accordion',
-            '@radix-ui/react-tabs',
-          ],
-          'supabase': ['@supabase/supabase-js', '@supabase/auth-helpers-react'],
-          'query': ['@tanstack/react-query'],
-          'utils': ['date-fns', 'zod', 'lucide-react'],
+          if (id.includes('node_modules')) {
+            // React ecosystem
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'react-vendor';
+            }
+            
+            // Radix UI components - split into smaller chunks
+            if (id.includes('@radix-ui/react-dialog') || id.includes('@radix-ui/react-alert-dialog')) {
+              return 'radix-dialog';
+            }
+            if (id.includes('@radix-ui/react-select') || id.includes('@radix-ui/react-dropdown')) {
+              return 'radix-select';
+            }
+            if (id.includes('@radix-ui/react-accordion') || id.includes('@radix-ui/react-collapsible')) {
+              return 'radix-accordion';
+            }
+            if (id.includes('@radix-ui/react-tabs') || id.includes('@radix-ui/react-navigation')) {
+              return 'radix-tabs';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'radix-other';
+            }
+            
+            // Supabase
+            if (id.includes('@supabase')) {
+              return 'supabase';
+            }
+            
+            // React Query
+            if (id.includes('@tanstack/react-query')) {
+              return 'react-query';
+            }
+            
+            // Form libraries
+            if (id.includes('react-hook-form') || id.includes('@hookform')) {
+              return 'form-libs';
+            }
+            
+            // Utilities
+            if (id.includes('date-fns')) {
+              return 'date-utils';
+            }
+            if (id.includes('zod')) {
+              return 'zod';
+            }
+            if (id.includes('lucide-react')) {
+              return 'icons';
+            }
+            
+            // Other node_modules
+            return 'vendor-other';
+          }
+          
+          // Split app code by route/page
+          if (id.includes('src/pages/')) {
+            const pageName = id.split('src/pages/')[1].split('.')[0].toLowerCase();
+            return `page-${pageName}`;
+          }
+          
+          // Split components
+          if (id.includes('src/components/')) {
+            if (id.includes('src/components/ui/')) {
+              return 'ui-components';
+            }
+            return 'components';
+          }
         },
       },
     },
