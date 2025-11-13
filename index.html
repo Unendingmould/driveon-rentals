@@ -62,13 +62,39 @@
     </style>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      // Remove loader once React mounts
+      // Remove loader once React mounts - multiple strategies for reliability
+      function removeLoader() {
+        var loader = document.getElementById('initial-loader');
+        if (loader) {
+          loader.style.opacity = '0';
+          loader.style.transition = 'opacity 0.3s ease-out';
+          setTimeout(function() {
+            loader.style.display = 'none';
+          }, 300);
+        }
+      }
+      
+      // Strategy 1: DOMContentLoaded
       window.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-          var loader = document.getElementById('initial-loader');
-          if (loader) loader.style.display = 'none';
-        }, 100);
+        setTimeout(removeLoader, 100);
       });
+      
+      // Strategy 2: Load event (fallback)
+      window.addEventListener('load', function() {
+        setTimeout(removeLoader, 200);
+      });
+      
+      // Strategy 3: Force remove after max time (safety net)
+      setTimeout(removeLoader, 5000);
+      
+      // Strategy 4: Watch for root content changes (React mount detection)
+      var checkInterval = setInterval(function() {
+        var root = document.getElementById('root');
+        if (root && root.children.length > 1) {
+          removeLoader();
+          clearInterval(checkInterval);
+        }
+      }, 100);
     </script>
   </body>
 </html>
