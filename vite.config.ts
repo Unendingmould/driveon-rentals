@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import legacy from "@vitejs/plugin-legacy";
 import path from "path";
 
 // https://vitejs.dev/config/
@@ -11,19 +10,6 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    legacy({
-      targets: [
-        "defaults",
-        "not IE 11",
-        "iOS >= 12",
-        "Safari >= 12",
-        "Android >= 8",
-      ],
-      modernPolyfills: true,
-      additionalLegacyPolyfills: [
-        "regenerator-runtime/runtime",
-      ],
-    }),
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -31,7 +17,13 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    target: "es2018",
+    target: "es2015",
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: mode === 'production',
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: (id) => {
