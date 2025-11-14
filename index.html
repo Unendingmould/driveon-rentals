@@ -46,68 +46,7 @@
   </head>
 
   <body class="bg-background text-foreground">
-    <div id="root" class="min-h-screen bg-background">
-      <!-- Loading state before React hydrates -->
-      <div id="initial-loader" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background-color: hsl(0, 0%, 98%);">
-        <div style="text-align: center;">
-          <div style="width: 48px; height: 48px; border: 4px solid hsl(48, 96%, 53%); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px;"></div>
-          <p style="color: hsl(222, 15%, 45%); font-family: Inter, sans-serif; font-size: 14px;">Loading TrucksOnFlex...</p>
-        </div>
-      </div>
-    </div>
-    <style>
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-      /* Ensure body doesn't create scrollbar during loading */
-      body.loading {
-        overflow: hidden;
-        height: 100vh;
-        height: 100dvh;
-      }
-    </style>
+    <div id="root" class="min-h-screen bg-background"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      // Add loading class to body
-      document.body.classList.add('loading');
-      
-      // Remove loader once React mounts - multiple strategies for reliability
-      function removeLoader() {
-        var loader = document.getElementById('initial-loader');
-        if (loader && !loader.dataset.removed) {
-          loader.dataset.removed = 'true';
-          document.body.classList.remove('loading');
-          loader.style.opacity = '0';
-          loader.style.transition = 'opacity 0.3s ease-out';
-          setTimeout(function() {
-            if (loader.parentNode) {
-              loader.parentNode.removeChild(loader);
-            }
-          }, 300);
-        }
-      }
-      
-      // Strategy 1: DOMContentLoaded  
-      window.addEventListener('DOMContentLoaded', function() {
-        setTimeout(removeLoader, 100);
-      });
-      
-      // Strategy 2: Load event (fallback)
-      window.addEventListener('load', function() {
-        setTimeout(removeLoader, 200);
-      });
-      
-      // Strategy 3: Force remove after max time (safety net)
-      setTimeout(removeLoader, 5000);
-      
-      // Strategy 4: Watch for root content changes (React mount detection)
-      var checkInterval = setInterval(function() {
-        var root = document.getElementById('root');
-        if (root && root.children.length > 1) {
-          removeLoader();
-          clearInterval(checkInterval);
-        }
-      }, 100);
-    </script>
   </body>
 </html>
