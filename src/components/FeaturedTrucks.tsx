@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import TruckDetailModal from "./TruckDetailModal";
 import { useTrucks } from "@/hooks/useDriveonData";
@@ -95,6 +95,16 @@ const PLACEHOLDER_TRUCKS: TruckWithAssets[] = [
 export default function FeaturedTrucks() {
   const { data: trucks, isLoading, isError } = useTrucks();
   const [selectedTruck, setSelectedTruck] = useState<TruckWithAssets | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("[FeaturedTrucks] query state", {
+        isLoading,
+        isError,
+        truckCount: trucks?.length ?? 0,
+      });
+    }
+  }, [trucks, isLoading, isError]);
 
   const featured = useMemo(() => {
     // Use real trucks if available, otherwise use placeholders

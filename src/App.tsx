@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import OurTrucks from "./pages/OurTrucks";
@@ -45,69 +45,80 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <ScrollToTop />
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/trucks" element={<OurTrucks />} />
-            <Route
-              path="/trucks/:slug/checkout"
-              element={
-                <ProtectedRoute>
-                  <TruckCheckout />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/order" element={<OrderForm />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/financing" element={<Financing />} />
-            <Route path="/financing/apply" element={<FinancingForm />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/my-trucks"
-              element={
-                <ProtectedRoute>
-                  <MyTrucks />
-                </ProtectedRoute>
-              }
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </TooltipProvider>
-    {/* React Query DevTools - only in development */}
-    {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
-  </QueryClientProvider>
-);
+const App = () => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("[App] Mounted", {
+        path: window.location.pathname,
+        userAgent: window.navigator.userAgent,
+      });
+    }
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
+          <ScrollToTop />
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/trucks" element={<OurTrucks />} />
+              <Route
+                path="/trucks/:slug/checkout"
+                element={
+                  <ProtectedRoute>
+                    <TruckCheckout />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/order" element={<OrderForm />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/financing" element={<Financing />} />
+              <Route path="/financing/apply" element={<FinancingForm />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/my-trucks"
+                element={
+                  <ProtectedRoute>
+                    <MyTrucks />
+                  </ProtectedRoute>
+                }
+              />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </TooltipProvider>
+      {/* React Query DevTools - only in development */}
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+    </QueryClientProvider>
+  );
+};
 
 export default App;
