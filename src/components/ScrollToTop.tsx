@@ -11,11 +11,13 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     // Scroll to top immediately on route change
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant' // Use instant for immediate scroll, no animation
-    });
+    if (typeof window !== 'undefined') {
+      try {
+        window.scrollTo(0, 0);
+      } catch {
+        // Ignore any scroll errors on very old browsers
+      }
+    }
   }, [pathname]);
 
   return null;
