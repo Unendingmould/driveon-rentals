@@ -10,11 +10,14 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative h-[100dvh] md:min-h-screen flex items-center overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroTruckImage})` }}
+        style={{ 
+          backgroundImage: `url(${heroTruckImage})`,
+          willChange: 'auto'
+        }}
       >
         <div className="absolute inset-0 bg-black/40" />
       </div>
