@@ -83,21 +83,7 @@ export default defineConfig(({ mode }) => ({
               return 'date-picker';
             }
             
-            // Other node_modules - split alphabetically for better caching
-            const moduleName = id.split('node_modules/')[1]?.split('/')[0];
-            if (moduleName) {
-              const firstChar = moduleName[0].toLowerCase();
-              if (firstChar >= 'a' && firstChar <= 'f') {
-                return 'vendor-a-f';
-              } else if (firstChar >= 'g' && firstChar <= 'm') {
-                return 'vendor-g-m';
-              } else if (firstChar >= 'n' && firstChar <= 's') {
-                return 'vendor-n-s';
-              } else {
-                return 'vendor-t-z';
-              }
-            }
-            
+            // Other node_modules - keep simple to avoid dependency issues
             return 'vendor-other';
           }
           
