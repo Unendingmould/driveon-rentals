@@ -1,42 +1,59 @@
-import { StrictMode, useEffect } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { SupabaseProvider } from "./providers/SupabaseProvider";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { logFrontEndError } from "./services/errorLogger";
 
 // Global error handlers for debugging (especially on mobile)
-window.addEventListener('error', (event) => {
-  console.error('[Global Error Handler]', {
+window.addEventListener("error", (event) => {
+  console.error("[Global Error Handler]", {
     message: event.message,
     filename: event.filename,
     lineno: event.lineno,
     colno: event.colno,
     error: event.error,
   });
+
+  void logFrontEndError({
+    context: "window.error",
+    error: event.error ?? event.message,
+    extra: {
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    },
+  });
 });
 
-window.addEventListener('unhandledrejection', (event) => {
-  console.error('[Unhandled Promise Rejection]', {
+window.addEventListener("unhandledrejection", (event) => {
+  console.error("[Unhandled Promise Rejection]", {
     reason: event.reason,
     promise: event.promise,
+  });
+
+  void logFrontEndError({
+    context: "window.unhandledrejection",
+    error: event.reason,
+    extra: {},
   });
 });
 
 // Remove initial loader when React is ready
 const removeInitialLoader = () => {
-  const loader = document.getElementById('initial-loader');
+  const loader = document.getElementById("initial-loader");
   if (loader) {
-    loader.style.opacity = '0';
-    loader.style.transition = 'opacity 0.3s ease-out';
+    loader.style.opacity = "0";
+    loader.style.transition = "opacity 0.3s ease-out";
     setTimeout(() => {
-      loader.style.display = 'none';
+      loader.style.display = "none";
       loader.remove();
     }, 300);
   }
 };
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <ErrorBoundary>
       <SupabaseProvider>

@@ -1,6 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import { Button } from './ui/button';
 import { AlertTriangle } from 'lucide-react';
+import { logFrontEndError } from '@/services/errorLogger';
 
 interface Props {
   children: ReactNode;
@@ -29,7 +30,16 @@ class ErrorBoundary extends Component<Props, State> {
       stack: error.stack,
       componentStack: errorInfo.componentStack,
     });
-    
+
+    // Persist error to Supabase for remote diagnostics
+    void logFrontEndError({
+      context: 'ErrorBoundary',
+      error,
+      extra: {
+        componentStack: errorInfo.componentStack,
+      },
+    });
+
     // In production, send to error tracking service (Sentry, LogRocket, etc.)
     // Example: Sentry.captureException(error, { contexts: { react: errorInfo } });
   }
