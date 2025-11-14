@@ -61,7 +61,7 @@ export function DashboardSidebar({ links, session, loading, onSignOut }: Dashboa
   };
 
   return (
-    <aside className="fixed left-0 top-[3.87rem] z-30 h-[calc(100vh-3.87rem)] w-64 border-r border-border bg-white flex flex-col">
+    <aside className="hidden md:flex fixed left-0 top-[3.87rem] z-30 h-[calc(100vh-3.87rem)] w-64 border-r border-border bg-white flex-col">
       {/* User Info */}
       <div className="border-b border-border px-6 py-4">
         <div className="flex items-center gap-3">

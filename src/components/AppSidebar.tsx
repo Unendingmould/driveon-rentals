@@ -10,6 +10,7 @@ type SidebarLink = {
   href: string;
   label: string;
   icon: LucideIcon;
+  children?: SidebarLink[];
 };
 
 interface AppSidebarProps {

@@ -11,6 +11,8 @@ import {
   Info,
   DollarSign,
   Phone,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSessionContext } from "@supabase/auth-helpers-react";
@@ -24,6 +26,7 @@ import type { SidebarLink } from "./AppSidebar";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState<string[]>([]);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isTransparent, setIsTransparent] = useState(true);
@@ -31,6 +34,12 @@ export default function Navigation() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { session, supabaseClient, isLoading: authLoading } = useSessionContext();
+
+  const toggleMobileExpanded = (key: string) => {
+    setMobileExpanded((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    );
+  };
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -258,6 +267,53 @@ export default function Navigation() {
                       {sidebarLinks.map((link) => {
                         const Icon = link.icon;
                         const active = isActive(link.href);
+                        const hasChildren = Array.isArray(link.children) && link.children.length > 0;
+                        const expanded = mobileExpanded.includes(link.href);
+
+                        if (hasChildren) {
+                          return (
+                            <div key={link.href} className="rounded-2xl">
+                              <button
+                                type="button"
+                                onClick={() => toggleMobileExpanded(link.href)}
+                                className={`flex w-full items-center justify-between rounded-2xl px-4 py-3 text-base font-medium transition-colors ${
+                                  expanded
+                                    ? "bg-[#1f1c1a] text-white shadow-lg"
+                                    : "bg-white/70 text-[#5c534c] backdrop-blur hover:bg-yellow-100/80 hover:text-[#1f1c1a]"
+                                }`}
+                              >
+                                <span className="flex items-center gap-3">
+                                  <Icon className="h-5 w-5" />
+                                  {link.label}
+                                </span>
+                                {expanded ? (
+                                  <ChevronDown className="h-5 w-5" />
+                                ) : (
+                                  <ChevronRight className="h-5 w-5" />
+                                )}
+                              </button>
+                              {expanded && (
+                                <div className="mt-1 space-y-2 pl-4">
+                                  {link.children!.map((child) => (
+                                    <Link
+                                      key={child.href}
+                                      to={child.href}
+                                      onClick={() => setIsOpen(false)}
+                                      className={`flex items-center gap-3 rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
+                                        isActive(child.href)
+                                          ? "bg-[#1f1c1a] text-white shadow-lg"
+                                          : "bg-white/70 text-[#5c534c] backdrop-blur hover:bg-yellow-100/80 hover:text-[#1f1c1a]"
+                                      }`}
+                                    >
+                                      <child.icon className="h-4 w-4" />
+                                      <span>{child.label}</span>
+                                    </Link>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        }
 
                         return (
                           <Link
