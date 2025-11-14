@@ -22,10 +22,13 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Log error to console in development
-    if (import.meta.env.DEV) {
-      console.error('React Error Boundary caught an error:', error, errorInfo);
-    }
+    // Always log to console for debugging (especially important for mobile)
+    console.error('[ErrorBoundary] Caught error:', {
+      error: error.toString(),
+      message: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack,
+    });
     
     // In production, send to error tracking service (Sentry, LogRocket, etc.)
     // Example: Sentry.captureException(error, { contexts: { react: errorInfo } });
@@ -55,11 +58,19 @@ class ErrorBoundary extends Component<Props, State> {
               We're sorry for the inconvenience. An unexpected error occurred.
             </p>
             
-            {import.meta.env.DEV && this.state.error && (
+            {this.state.error && (
               <div className="mb-6 p-4 bg-destructive/5 border border-destructive/20 rounded-lg text-left">
                 <p className="text-sm font-mono text-destructive break-all">
                   {this.state.error.toString()}
                 </p>
+                {this.state.error.stack && (
+                  <details className="mt-2">
+                    <summary className="text-xs cursor-pointer">Stack trace</summary>
+                    <pre className="text-xs mt-2 overflow-auto max-h-40">
+                      {this.state.error.stack}
+                    </pre>
+                  </details>
+                )}
               </div>
             )}
             

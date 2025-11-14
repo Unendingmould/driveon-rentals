@@ -23,8 +23,10 @@ import logoWhite from "@/assets/truckonflex-white.svg";
 import { AppSidebar } from "./AppSidebar";
 import { DashboardSidebar } from "./DashboardSidebar";
 import type { SidebarLink } from "./AppSidebar";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Navigation() {
+  const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string[]>([]);
   const [isVisible, setIsVisible] = useState(true);
@@ -34,6 +36,16 @@ export default function Navigation() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { session, supabaseClient, isLoading: authLoading } = useSessionContext();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("[Navigation] Mounted", {
+        isMobile,
+        pathname: location.pathname,
+        hasSession: !!session,
+      });
+    }
+  }, [isMobile, location.pathname, session]);
 
   const toggleMobileExpanded = (key: string) => {
     setMobileExpanded((prev) =>
@@ -375,10 +387,10 @@ export default function Navigation() {
           </div>
         </div>
       </nav>
-      {shouldShowDashboardSidebar && (
+      {!isMobile && shouldShowDashboardSidebar && (
         <DashboardSidebar links={authenticatedSidebarLinks} session={session} loading={authLoading} onSignOut={handleSignOut} />
       )}
-      {shouldShowSidebar && !shouldShowDashboardSidebar && (
+      {!isMobile && shouldShowSidebar && !shouldShowDashboardSidebar && (
         <AppSidebar links={sidebarLinks} session={session} loading={authLoading} onSignOut={handleSignOut} />
       )}
     </>
